@@ -1,29 +1,58 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Direct Apps – Android apps</title>
-<meta name="description" content="Direct Apps: simple, private Android apps. Privacy policies and contact.">
+<title>Free The People Apps – Android apps</title>
+<meta name="description" content="Free The People Apps: simple, private Android apps. Downloads, privacy policies and contact.">
 <style>
 :root{--bg:#f6f8fb;--card:#fff;--ink:#1b2430;--muted:#5b6675;--accent:#1e6fd9}
 @media (prefers-color-scheme:dark){:root{--bg:#10151c;--card:#18202a;--ink:#e8edf3;--muted:#9aa6b4;--accent:#6aa8ff}}
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
-header,main,footer{max-width:820px;margin:auto;padding:24px 18px}
+header,main,footer{max-width:900px;margin:auto;padding:24px 18px}
 header h1{margin:0 0 4px;font-size:2rem}header p{margin:0;color:var(--muted)}
+.app,.card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:16px}
+.head{display:flex;gap:14px;align-items:center}.icon{border-radius:16px;flex:none}
+.app h2{margin:0;font-size:1.25rem}.meta{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.app ul{margin:6px 0 12px;padding-left:20px}
+.shots{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px}.shots img{height:auto;border-radius:10px;border:1px solid rgba(127,127,127,.25);flex:none}
+.links{margin:12px 0 0;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--accent);color:#fff;padding:8px 14px;border-radius:9px;font-weight:600}.btn:hover{text-decoration:none;opacity:.9}
 .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
-.card{background:var(--card);border-radius:14px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.card h2{font-size:1.1rem;margin:0 0 4px}.card p{margin:0 0 10px;color:var(--muted);font-size:.95rem}
+.card h3{font-size:1.05rem;margin:0 0 4px}.card p{margin:0 0 10px;color:var(--muted);font-size:.95rem}
+.note{color:var(--muted);font-size:.9rem}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 footer{color:var(--muted);font-size:.9rem}
 </style></head>
 <body>
-<header><h1>Direct Apps</h1><p>Simple, private Android apps. Published by Direct Apps.</p></header>
+<header><h1>Free The People Apps</h1><p>Simple, private Android apps. Published by Free The People Apps.</p></header>
 <main>
+<section class="app" id="plantping">
+<div class="head"><img class="icon" src="img/plantping-icon.png" alt="" width="72" height="72"><div><h2>PlantPing: Water Reminder</h2><p class="meta">Lifestyle · Android · Free with ads · v1.2.4</p></div></div>
+<p>Never forget to water a plant. Simple reminders, streaks and plant photos.</p><ul><li>Presets for pothos, monstera, snake plant, succulents and more, or a custom schedule</li><li>See what is overdue, due today or due soon</li><li>Reminders that survive a phone restart</li><li>Optional plant photos, light and dark themes</li><li>No account: your plants and photos stay on your device</li></ul>
+<div class="shots"><img src="img/plantping-1-plant-list.jpg" alt="PlantPing: Water Reminder screenshot" loading="lazy" width="180"><img src="img/plantping-2-quick-add.jpg" alt="PlantPing: Water Reminder screenshot" loading="lazy" width="180"><img src="img/plantping-3-dark-theme.jpg" alt="PlantPing: Water Reminder screenshot" loading="lazy" width="180"></div>
+<p class="links"><a class="btn" href="https://github.com/bradarb8888-alt/apps/releases/download/plantping-v1.2.4/plantping-v1.2.4.apk">Download APK (v1.2.4)</a> <a href="privacy/plantping.html">Privacy policy</a></p>
+</section>
+<section class="app" id="tipsnap">
+<div class="head"><img class="icon" src="img/tipsnap-icon.png" alt="" width="72" height="72"><div><h2>Hair Splitter Tipper Divver</h2><p class="meta">Finance · Android · Free with ads · v1.3.3</p></div></div>
+<p>Tip calculator and bill splitter: per-person totals in seconds, offline.</p><ul><li>Big keypad, 15/18/20% or custom tip</li><li>Split between any number of people, with names</li><li>Per-person shortfall slider, tax and rounding options</li><li>Exact cents: see who pays the extra penny</li><li>Attach a photo of the bill and share the result</li></ul>
+<div class="shots"><img src="img/tipsnap-1-split-four-ways.jpg" alt="Hair Splitter Tipper Divver screenshot" loading="lazy" width="180"><img src="img/tipsnap-2-named-split.jpg" alt="Hair Splitter Tipper Divver screenshot" loading="lazy" width="180"><img src="img/tipsnap-3-quick-tip.jpg" alt="Hair Splitter Tipper Divver screenshot" loading="lazy" width="180"></div>
+<p class="links"><a class="btn" href="https://github.com/bradarb8888-alt/apps/releases/download/tipsnap-v1.3.3/tipsnap-v1.3.3.apk">Download APK (v1.3.3)</a> <a href="privacy/tipsnap.html">Privacy policy</a></p>
+</section>
+<section class="app" id="mortgage">
+<div class="head"><img class="icon" src="img/mortgage-icon.png" alt="" width="72" height="72"><div><h2>Mortgage Payoff Date Calculator</h2><p class="meta">Finance · Android · Free with ads · v1.6.3</p></div></div>
+<p>See your monthly payment, payoff date and what extra payments save you.</p><ul><li>Monthly principal and interest from loan, rate and term</li><li>Down-payment planner with a target date</li><li>Extra-payment comparison: time and interest saved</li><li>Property tax, insurance and HOA for the full monthly cost</li><li>Full amortization schedule; your numbers never leave your phone</li></ul>
+<div class="shots"><img src="img/mortgage-1-monthly-payment.jpg" alt="Mortgage Payoff Date Calculator screenshot" loading="lazy" width="180"><img src="img/mortgage-2-down-payment.jpg" alt="Mortgage Payoff Date Calculator screenshot" loading="lazy" width="180"></div>
+<p class="links"><a class="btn" href="https://github.com/bradarb8888-alt/apps/releases/download/mortgage-v1.6.3/mortgage-v1.6.3.apk">Download APK (v1.6.3)</a> <a href="privacy/mortgage.html">Privacy policy</a></p>
+</section>
+<section class="app" id="downhill">
+<div class="head"><img class="icon" src="img/downhill-icon.png" alt="" width="72" height="72"><div><h2>Downhill Roll</h2><p class="meta">Maps &amp; Navigation · Android · Free with ads · v1.0.2</p></div></div>
+<p>Find the downhill way: routes with less climbing, plus spoken turn guidance.</p><ul><li>Compare the shortest route with the downhill way</li><li>Distance, climb and descent side by side</li><li>Spoken turn-by-turn guidance</li><li>For skateboards, longboards, scooters, bikes and walking</li><li>No account; location is used only while the app is open</li></ul>
+<div class="shots"><img src="img/downhill-1-start.jpg" alt="Downhill Roll screenshot" loading="lazy" width="180"><img src="img/downhill-2-downhill-route.jpg" alt="Downhill Roll screenshot" loading="lazy" width="180"></div>
+<p class="links"><a class="btn" href="https://github.com/bradarb8888-alt/apps/releases/download/downhill-v1.0.2/downhill-v1.0.2.apk">Download APK (v1.0.2)</a> <a href="privacy/downhill.html">Privacy policy</a></p>
+</section>
+<p class="note">Installing an APK from this site: open the download on your Android phone and allow "Install unknown apps" for your browser when asked.</p>
+<h2>Other apps</h2>
 <div class="grid">
-<div class="card"><h2>PillCheck</h2><p>Medication checklist with dose reminders. Your data stays on your phone.</p><a href="privacy/pillcheck.html">Privacy policy</a></div>
-<div class="card"><h2>Direct</h2><p>QR code and barcode scanner.</p><a href="privacy/direct.html">Privacy policy</a></div>
-<div class="card"><h2>Downhill Roll</h2><p>Trail location for downhill riders.</p><a href="privacy/downhill.html">Privacy policy</a></div>
-<div class="card"><h2>Mortgage Payoff Date Calculator</h2><p>See when your mortgage is paid off and how extra payments help.</p><a href="privacy/mortgage.html">Privacy policy</a></div>
-<div class="card"><h2>PlantPing: Water Reminder</h2><p>Reminders to water your plants on time.</p><a href="privacy/plantping.html">Privacy policy</a></div>
-<div class="card"><h2>TipSnap (Hair Splitter Tipper Divver)</h2><p>Tip calculator and bill splitter.</p><a href="privacy/tipsnap.html">Privacy policy</a></div>
+<div class="card"><h3>PillCheck</h3><p>Medication checklist with dose reminders. Your data stays on your phone.</p><a href="privacy/pillcheck.html">Privacy policy</a></div>
+<div class="card"><h3>Direct</h3><p>QR code and barcode scanner.</p><a href="privacy/direct.html">Privacy policy</a></div>
 </div>
 </main>
 <footer>Contact: <a href="mailto:bradarb8888@gmail.com">bradarb8888@gmail.com</a> · <a href="app-ads.txt">app-ads.txt</a></footer>
