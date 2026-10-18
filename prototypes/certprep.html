@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CertPrep: Electrician exam prep (prototype) | Free The People Apps</title>
+<meta name="description" content="CertPrep prototype: Electrician exam prep. Interactive free and Pro preview by Free The People Apps.">
+<meta name="theme-color" content="#c62828">
+<link rel="icon" href="img/certprep-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="img/certprep-icon.png">
+<style>:root{--c:#1e6fd9;--c2:#0b4fb0;--bg:#f4f6f9;--card:#fff;--ink:#17202b;--muted:#5d6977;--line:#e3e7ec;--ok:#1a8f4c;--warn:#c26a00;--bad:#c62828;--pro:#7b3fe4}
+@media (prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#18202a;--ink:#e8edf3;--muted:#9aa6b4;--line:#2a3542}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);max-width:560px;margin:auto;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--c)}button,input,select,textarea{font:inherit;color:inherit}
+.bar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--c);color:#fff}
+.bar .back{color:#fff;text-decoration:none;font-weight:600;font-size:.95rem}
+.tier{display:flex;background:rgba(255,255,255,.18);border-radius:999px;padding:3px}
+.tier button{border:0;background:none;color:#fff;padding:5px 14px;border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer}
+.tier button.on{background:#fff;color:var(--c)}
+body.is-pro .tier button.on{color:var(--pro)}
+.hero{display:flex;gap:12px;align-items:center;padding:14px 16px 6px}
+.hero img{border-radius:12px;flex:none}.hero h1{margin:0;font-size:1.35rem}.hero p{margin:0;color:var(--muted);font-size:.9rem}
+.planline{margin:6px 16px 0;font-size:.82rem;color:var(--muted)}
+.probanner{display:none;margin:8px 16px 0;padding:8px 12px;border-radius:10px;background:var(--pro);color:#fff;font-weight:700;font-size:.85rem;text-align:center}
+body.is-pro .probanner{display:block}body.is-pro .free-only{display:none!important}body:not(.is-pro) .pro-only{display:none!important}
+main{flex:1;padding:8px 16px 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;position:relative}
+.card h2{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.muted{color:var(--muted)}.small{font-size:.85rem}.big{font-size:1.9rem;font-weight:800;line-height:1.1}
+.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.grow{flex:1}.wrap{flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.8rem;color:var(--muted);margin:6px 0 2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;padding:9px 14px;background:var(--c);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--c);border:1px solid var(--c)}.btn.sm{padding:5px 10px;font-size:.85rem}.btn.full{width:100%}
+.btn.pro{background:var(--pro)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.list{list-style:none;margin:0;padding:0}.list li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.list li:last-child{border-bottom:0}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--line);color:var(--ink);white-space:nowrap}
+.badge.ok{background:#d9f2e3;color:#126b38}.badge.warn{background:#ffe9cc;color:#8a4b00}.badge.bad{background:#fde0e0;color:#a11}.badge.pro{background:var(--pro);color:#fff}.badge.demo{background:#e0ecff;color:#1b4fa0}
+.meter{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:var(--c)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0 0}.tabs button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.88rem;cursor:pointer;white-space:nowrap}.tabs button.on{background:var(--c);color:#fff;border-color:var(--c)}
+.pro-feat{min-height:120px}
+.lockov{display:none;position:absolute;inset:0;border-radius:14px;background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:12px;z-index:5}
+body:not(.is-pro) .pro-feat>.lockov{display:flex}
+.lockov b{font-size:.95rem}.lockov svg{width:26px;height:26px;fill:var(--pro)}
+.empty{color:var(--muted);text-align:center;padding:14px 0;font-size:.9rem}
+.adslot{border:1px dashed var(--muted);border-radius:10px;padding:12px;text-align:center;color:var(--muted);font-size:.8rem;margin:12px 0}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#222;color:#fff;padding:10px 16px;border-radius:10px;font-size:.9rem;transition:transform .25s;z-index:50;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+footer{padding:16px;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+footer a{text-decoration:none}
+@media print{.bar,.tabs,footer,.probanner,.noprint,.hero,.planline{display:none!important}body{background:#fff;color:#000}.card{border:0}}
+:root{--c:#c62828;--c2:#8e0000}.q{font-size:1.08rem;font-weight:600;margin:4px 0 10px}.opts button{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:11px 12px;margin:6px 0;cursor:pointer;font-size:.98rem}
+.opts button.right{background:#d9f2e3;border-color:#1a8f4c;color:#0d4d28}.opts button.wrong{background:#fde0e0;border-color:#c62828;color:#7a1010}
+.expl{background:var(--bg);border-radius:10px;padding:8px 10px;font-size:.88rem;margin-top:6px}
+.tb div{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:.85rem}.tb b{width:110px;font-weight:600}.tb .meter{flex:1}
+</style></head>
+<body>
+<header class="bar"><a class="back" href="./">&#8249; Prototypes</a><div class="tier" role="group" aria-label="Plan"><button type="button" data-tier="free">Free</button><button type="button" data-tier="pro">Pro</button></div></header>
+<div class="hero"><img src="img/certprep-icon.svg" width="48" height="48" alt=""><div><h1>CertPrep</h1><p>Electrician exam prep</p></div></div>
+<p class="planline free-only">Free: 50 practice questions, score tracking, one sample mock exam. Pro idea: $25–49 once.</p>
+<div class="probanner">Prototype - Pro preview · demo only, no payment</div>
+<main>
+<div class="tabs"><button class="on" data-tab="practice">Practice</button><button data-tab="mock">Mock exam</button><button data-tab="stats">Progress</button></div>
+<section id="tab-practice">
+ <div class="card"><div class="row small muted"><span class="grow" id="qMeta"></span><span id="bankTxt"></span></div>
+  <div class="q" id="q"></div><div class="opts" id="opts"></div><div id="fb"></div>
+  <div class="row" style="margin-top:10px"><button class="btn ghost sm pro-only" id="weak">Practice weak area</button><span class="grow"></span><button class="btn" id="next">Next question</button></div></div>
+ <div class="card pro-feat" data-feat="Spaced repetition"><h2>Spaced repetition</h2><p class="small muted" style="margin:0 0 6px">Missed questions come back sooner; known ones wait longer (Leitner boxes).</p><div class="grid2" id="boxes"></div></div>
+</section>
+<section id="tab-mock" hidden>
+ <div class="card" id="mockCard"></div>
+</section>
+<section id="tab-stats" hidden>
+ <div class="card"><h2>Overall</h2><div class="grid2"><div><div class="big" id="acc">0%</div><div class="small muted">accuracy</div></div><div><div class="big" id="ans">0</div><div class="small muted">answered</div></div></div></div>
+ <div class="card pro-feat" data-feat="Topic analytics & study plan"><h2>By topic</h2><div class="tb" id="topics"></div><p class="small" id="planTxt" style="margin:8px 0 0"></p></div>
+</section>
+
+</main>
+<footer>Prototype by <b>Free The People Apps</b> · <a href="https://bradarb8888-alt.github.io/">bradarb8888-alt.github.io</a><br>Data stays in this browser (localStorage). No accounts, no trackers, no payments.</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+var APP='certprep';
+(function(){
+var LOCK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 0 1 6 0v3z"/></svg>';
+var P=window.P={subs:[],
+ k:function(n){return APP+':'+n},
+ get:function(n,d){try{var v=localStorage.getItem(P.k(n));return v==null?d:JSON.parse(v)}catch(e){return d}},
+ set:function(n,v){try{localStorage.setItem(P.k(n),JSON.stringify(v))}catch(e){}},
+ pro:function(){return P.get('tier','free')==='pro'},
+ onTier:function(f){P.subs.push(f)},
+ setTier:function(t){P.set('tier',t);document.body.classList.toggle('is-pro',t==='pro');
+  document.querySelectorAll('.tier button').forEach(function(b){b.classList.toggle('on',b.dataset.tier===t);b.setAttribute('aria-pressed',b.dataset.tier===t)});
+  P.subs.forEach(function(f){f(t)})},
+ esc:function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})},
+ $:function(s,r){return (r||document).querySelector(s)},
+ $$:function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))},
+ toast:function(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(P._t);P._t=setTimeout(function(){t.classList.remove('show')},2200)},
+ money:function(n){return '$'+(Math.round(n*100)/100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')},
+ today:function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},
+ addDays:function(iso,n){var d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)},
+ days:function(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5)},
+ fmtDate:function(iso){return new Date(iso+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})},
+ top:function(el){return Math.max(0,el.getBoundingClientRect().top+window.scrollY-60)},
+ uid:function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)},
+ quota:function(name,limit,period){var key='q_'+name,p=period==='day'?P.today():P.today().slice(0,7),q=P.get(key,{p:p,n:0});if(q.p!==p)q={p:p,n:0};
+  return{used:q.n,limit:limit,left:Math.max(0,limit-q.n),ok:function(){return P.pro()||q.n<limit},use:function(){q.n++;P.set(key,q)}}},
+ hash:function(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0},
+ download:function(name,text,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type||'text/plain'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)},
+ copy:function(text){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){P.toast('Copied')},function(){P.toast('Copy failed')})}else{var t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');P.toast('Copied')}catch(e){P.toast('Copy failed')}t.remove()}}
+};
+var qs=new URLSearchParams(location.search);
+if(qs.get('reset')==='1'){Object.keys(localStorage).filter(function(k){return k.indexOf(APP+':')===0}).forEach(function(k){localStorage.removeItem(k)})}
+if(qs.get('tier')==='pro'||qs.get('tier')==='free')P.set('tier',qs.get('tier'));
+document.addEventListener('DOMContentLoaded',function(){
+ P.$$('.pro-feat').forEach(function(el){var o=document.createElement('div');o.className='lockov';
+  o.innerHTML=LOCK+'<b>'+P.esc(el.dataset.feat||'Pro feature')+'</b><span class="small muted">Included in Pro</span><button class="btn pro sm" type="button">Preview Pro</button>';
+  o.querySelector('button').onclick=function(){P.setTier('pro');P.toast('Pro preview on (demo, no payment)')};el.appendChild(o)});
+ P.$$('.tier button').forEach(function(b){b.onclick=function(){P.setTier(b.dataset.tier)}});
+ if(window.init)window.init();
+ P.setTier(P.get('tier','free'));
+});
+})();
+
+var FREE_N=50,TOPICS=['Ohm\'s law','Power','Series circuits','Parallel circuits','Code & safety'];
+var FACTS=[
+ ['What does GFCI stand for?','Ground-fault circuit interrupter',['Ground-fuse current indicator','General fault circuit isolator','Grounded feeder current interrupter'],'A GFCI trips when current leaks to ground, protecting people from shock.'],
+ ['What is the standard voltage of a household receptacle in North America?','120 V',['220 V','240 V','100 V'],'Receptacles are 120 V; 240 V is used for ranges and dryers.'],
+ ['What is the unit of electrical resistance?','Ohm',['Volt','Ampere','Watt'],'Resistance is measured in ohms (Ω).'],
+ ['Which insulation colour is normally used for the grounded (neutral) conductor?','White',['Black','Red','Green'],'White or grey identifies the grounded conductor.'],
+ ['A bare or green conductor is used for:','Equipment grounding',['The hot conductor','The neutral','Switch legs only'],'Green or bare copper is the equipment grounding conductor.'],
+ ['Copper 14 AWG branch-circuit wire is normally protected at:','15 A',['20 A','30 A','10 A'],'Small-conductor rule: 14 AWG copper is limited to 15 A overcurrent protection.'],
+ ['Copper 12 AWG branch-circuit wire is normally protected at:','20 A',['15 A','30 A','40 A'],'12 AWG copper is limited to 20 A overcurrent protection.'],
+ ['Copper 10 AWG branch-circuit wire is normally protected at:','30 A',['20 A','40 A','50 A'],'10 AWG copper is limited to 30 A overcurrent protection.'],
+ ['An AFCI is designed to protect against:','Arcing faults',['Lightning surges','Low voltage','Overheating motors only'],'Arc-fault breakers detect dangerous arcing that can start fires.'],
+ ['Before working on a circuit you should first:','Turn it off, lock it out and test for voltage',['Wear gloves and work live','Remove the neutral','Tape the breaker on'],'Always de-energize, lock out/tag out and verify absence of voltage.'],
+ ['1 kilowatt equals:','1,000 W',['100 W','10,000 W','1,024 W'],'Kilo means one thousand.'],
+ ['Which meter measures current without breaking the circuit?','Clamp meter',['Megohmmeter','Voltage tester','Wattmeter'],'A clamp meter reads the magnetic field around one conductor.'],
+ ['In a series circuit the current is:','The same through every component',['Divided between components','Zero at the last load','Highest at the source only'],'There is only one path, so the same current flows everywhere.'],
+ ['In a parallel circuit the voltage across each branch is:','The same',['Divided equally','Zero','Higher on the shortest branch'],'Each branch connects directly across the source.'],
+ ['What is the frequency of utility power in North America?','60 Hz',['50 Hz','120 Hz','400 Hz'],'North America uses 60 Hz; most of Europe uses 50 Hz.']];
+function rng(s){return function(){s=(s*1103515245+12345)&0x7fffffff;return s/0x7fffffff}}
+function opts(ans,r,unit){var o=[ans],m=[ans*2,ans*0.5,ans*1.5,ans>10?ans+10:ans+2,ans/3*2,ans*4];while(o.length<4){var v=Math.round(m[Math.floor(r()*m.length)]*100)/100;if(v>0&&o.indexOf(v)<0)o.push(v)}return o.map(function(v){return v.toLocaleString()+' '+unit})}
+function gen(i){var r=rng(i*7919+13),t=i%5,a,b,c,q,ans,ex,o;
+ if(t===4){var f=FACTS[Math.floor(i/5)%FACTS.length];return{t:4,q:f[0],a:f[1],o:[f[1]].concat(f[2]),ex:f[3]}}
+ if(t===0){a=[0.5,1,2,3,4,5,6,8,10,12][Math.floor(r()*10)];b=[5,10,12,20,24,30,40,60][Math.floor(r()*8)];if(r()<.5){ans=a*b;q='A '+b+' Ω load draws '+a+' A. What is the voltage across it?';o=opts(ans,r,'V');ex='V = I × R = '+a+' × '+b+' = '+ans+' V'}else{c=a*b;ans=a;q='A '+c+' V source is connected to a '+b+' Ω resistor. What is the current?';o=opts(ans,r,'A');ex='I = V ÷ R = '+c+' ÷ '+b+' = '+ans+' A'}}
+ if(t===1){a=[120,240][Math.floor(r()*2)];b=[2,5,8,10,12,15,16,20][Math.floor(r()*8)];if(r()<.5){ans=a*b;q='A '+a+' V appliance draws '+b+' A. How much power does it use?';o=opts(ans,r,'W');ex='P = V × I = '+a+' × '+b+' = '+ans+' W'}else{c=a*b;ans=b;q='A '+c.toLocaleString()+' W heater runs on '+a+' V. What current does it draw?';o=opts(ans,r,'A');ex='I = P ÷ V = '+c+' ÷ '+a+' = '+ans+' A'}}
+ if(t===2){a=Math.ceil(r()*20)*5;b=Math.ceil(r()*20)*5;c=Math.ceil(r()*10)*10;ans=a+b+c;q='Resistors of '+a+' Ω, '+b+' Ω and '+c+' Ω are connected in series. What is the total resistance?';o=opts(ans,r,'Ω');ex='Series: R = R1 + R2 + R3 = '+ans+' Ω'}
+ if(t===3){var pr=[[6,3],[12,6],[20,30],[10,40],[60,30],[12,4],[30,15],[100,100],[24,8],[18,9]][Math.floor(r()*10)];a=pr[0];b=pr[1];ans=a*b/(a+b);q='A '+a+' Ω and a '+b+' Ω resistor are connected in parallel. What is the total resistance?';o=opts(ans,r,'Ω');ex='Parallel: R = (R1 × R2) ÷ (R1 + R2) = '+(a*b)+' ÷ '+(a+b)+' = '+ans+' Ω'}
+ return{t:t,q:q,a:o[0],o:o,ex:ex}}
+function shuf(a,s){var r=rng(s),b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var x=b[i];b[i]=b[j];b[j]=x}return b}
+var st=P.get('st',{ans:0,ok:0,top:[[0,0],[0,0],[0,0],[0,0],[0,0]],box:{},pos:0,mockUsed:false}),curI=null,picked=false,mock=null;
+function bank(){return P.pro()?250:FREE_N}
+function chooseNext(weak){var n=bank();if(P.pro()){var due=Object.keys(st.box).filter(function(k){return+k<n&&st.box[k]<=1});if(weak){var acc=st.top.map(function(x){return x[1]?x[0]/x[1]:1}),w=acc.indexOf(Math.min.apply(null,acc)),c=[];for(var i=w;i<n;i+=5)c.push(i);return c[Math.floor(Math.random()*c.length)]}if(due.length&&Math.random()<.5)return+due[Math.floor(Math.random()*due.length)]}st.pos=(st.pos+1)%n;return st.pos}
+function showQ(i){curI=i;picked=false;var q=gen(i);P.$('#qMeta').textContent=TOPICS[q.t]+' · Q'+(i+1);P.$('#bankTxt').textContent=(P.pro()?'full bank: 250':'free bank: 50')+' questions';P.$('#q').textContent=q.q;
+ P.$('#opts').innerHTML=shuf(q.o,i+st.ans).map(function(o){return'<button type="button">'+P.esc(o)+'</button>'}).join('');P.$('#fb').innerHTML=''}
+function answer(btn){if(picked)return;picked=true;var q=gen(curI),ok=btn.textContent===q.a;P.$$('#opts button').forEach(function(b){if(b.textContent===q.a)b.classList.add('right');else if(b===btn)b.classList.add('wrong')});
+ st.ans++;if(ok)st.ok++;st.top[q.t][1]++;if(ok)st.top[q.t][0]++;var bx=st.box[curI]||1;st.box[curI]=ok?Math.min(5,bx+1):1;P.set('st',st);
+ P.$('#fb').innerHTML='<div class="expl"><b>'+(ok?'Correct.':'Not quite.')+'</b> '+P.esc(q.ex)+'</div>';stats()}
+function stats(){P.$('#acc').textContent=(st.ans?Math.round(st.ok/st.ans*100):0)+'%';P.$('#ans').textContent=st.ans;
+ P.$('#topics').innerHTML=TOPICS.map(function(t,i){var x=st.top[i],p=x[1]?Math.round(x[0]/x[1]*100):0;return'<div><b>'+t+'</b><div class="meter"><i style="width:'+p+'%;background:'+(p<60?'var(--bad)':p<80?'var(--warn)':'var(--ok)')+'"></i></div><span style="width:70px;text-align:right">'+p+'% ('+x[1]+')</span></div>'}).join('');
+ var acc=st.top.map(function(x){return x[1]?x[0]/x[1]:0}),w=acc.indexOf(Math.min.apply(null,acc));P.$('#planTxt').innerHTML='<b>Study plan:</b> 15 minutes a day on <b>'+TOPICS[w]+'</b>, then one mock exam each weekend.';
+ var b=[0,0,0,0,0];Object.keys(st.box).forEach(function(k){b[st.box[k]-1]++});P.$('#boxes').innerHTML=b.map(function(n,i){return'<div style="background:var(--bg);border-radius:10px;padding:8px"><b>Box '+(i+1)+'</b><div class="small muted">'+n+' questions · review every '+[1,2,4,7,14][i]+' d</div></div>'}).join('')}
+function rMock(){var c=P.$('#mockCard');if(!mock){var can=P.pro()||!st.mockUsed;c.innerHTML='<h2>'+(P.pro()?'Unlimited mock exams':'Sample mock exam')+'</h2><p class="small muted">'+(P.pro()?'20 questions, 25-minute timer, mixed topics.':'10 questions from the free bank. The free plan includes one sample mock.')+'</p>'+(st.lastMock?'<p class="small">Last score: <b>'+st.lastMock+'</b></p>':'')+'<button class="btn full" id="startMock"'+(can?'':' disabled')+'>'+(can?'Start mock exam':'Sample mock used: Pro unlocks unlimited')+'</button>';
+  var sb=P.$('#startMock');if(sb)sb.onclick=function(){var n=P.pro()?20:10,ids=shuf(Array.from({length:bank()},function(_,i){return i}),Date.now()).slice(0,n);mock={ids:ids,i:0,ok:0,end:Date.now()+(P.pro()?25:12)*60000};if(!P.pro()){st.mockUsed=true;P.set('st',st)}rMock()};return}
+ if(mock.i>=mock.ids.length){var sc=Math.round(mock.ok/mock.ids.length*100)+'% ('+mock.ok+'/'+mock.ids.length+')';st.lastMock=sc;P.set('st',st);c.innerHTML='<h2>Mock complete</h2><div class="big">'+sc+'</div><p class="small muted">'+(mock.ok/mock.ids.length>=.7?'Pass level (70%).':'Below the 70% pass level. Review your weak topics.')+'</p><button class="btn full" id="doneMock">Done</button>';mock=null;P.$('#doneMock').onclick=rMock;return}
+ var q=gen(mock.ids[mock.i]),left=Math.max(0,Math.round((mock.end-Date.now())/60000));c.innerHTML='<div class="row small muted"><span class="grow">Question '+(mock.i+1)+' of '+mock.ids.length+'</span><span>'+left+' min left</span></div><div class="meter" style="margin:6px 0"><i style="width:'+(mock.i/mock.ids.length*100)+'%"></i></div><div class="q">'+P.esc(q.q)+'</div><div class="opts">'+shuf(q.o,mock.i).map(function(o){return'<button type="button">'+P.esc(o)+'</button>'}).join('')+'</div>';
+ P.$$('.opts button',c).forEach(function(b){b.onclick=function(){if(b.textContent===q.a)mock.ok++;mock.i++;rMock()}})}
+function tab(t){P.$$('.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.tab===t)});['practice','mock','stats'].forEach(function(x){P.$('#tab-'+x).hidden=x!==t});if(t==='mock')rMock();if(t==='stats')stats()}
+function init(){P.$('#opts').onclick=function(e){var b=e.target.closest('button');if(b)answer(b)};P.$('#next').onclick=function(){showQ(chooseNext())};P.$('#weak').onclick=function(){showQ(chooseNext(true))};
+ P.$('.tabs').onclick=function(e){var b=e.target.closest('button');if(b)tab(b.dataset.tab)};
+ P.onTier(function(){if(curI==null||curI>=bank())showQ(st.pos%bank());else showQ(curI);stats();if(!P.$('#tab-mock').hidden)rMock()})}
+window.shotPrep=function(t){if(t==='free'){var q=gen(curI);P.$$('#opts button').filter(function(b){return b.textContent===q.a})[0].click()}else{for(var k=0;k<14;k++){showQ(chooseNext());var q2=gen(curI),bs=P.$$('#opts button');(k%3?bs.filter(function(b){return b.textContent===q2.a})[0]:bs.filter(function(b){return b.textContent!==q2.a})[0]).click()}tab('stats')}};
+
+</script>
+</body></html>

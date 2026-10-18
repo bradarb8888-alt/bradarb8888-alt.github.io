@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AgentTask: Personal task agent (prototype) | Free The People Apps</title>
+<meta name="description" content="AgentTask prototype: Personal task agent. Interactive free and Pro preview by Free The People Apps.">
+<meta name="theme-color" content="#00838f">
+<link rel="icon" href="img/agenttask-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="img/agenttask-icon.png">
+<style>:root{--c:#1e6fd9;--c2:#0b4fb0;--bg:#f4f6f9;--card:#fff;--ink:#17202b;--muted:#5d6977;--line:#e3e7ec;--ok:#1a8f4c;--warn:#c26a00;--bad:#c62828;--pro:#7b3fe4}
+@media (prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#18202a;--ink:#e8edf3;--muted:#9aa6b4;--line:#2a3542}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);max-width:560px;margin:auto;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--c)}button,input,select,textarea{font:inherit;color:inherit}
+.bar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--c);color:#fff}
+.bar .back{color:#fff;text-decoration:none;font-weight:600;font-size:.95rem}
+.tier{display:flex;background:rgba(255,255,255,.18);border-radius:999px;padding:3px}
+.tier button{border:0;background:none;color:#fff;padding:5px 14px;border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer}
+.tier button.on{background:#fff;color:var(--c)}
+body.is-pro .tier button.on{color:var(--pro)}
+.hero{display:flex;gap:12px;align-items:center;padding:14px 16px 6px}
+.hero img{border-radius:12px;flex:none}.hero h1{margin:0;font-size:1.35rem}.hero p{margin:0;color:var(--muted);font-size:.9rem}
+.planline{margin:6px 16px 0;font-size:.82rem;color:var(--muted)}
+.probanner{display:none;margin:8px 16px 0;padding:8px 12px;border-radius:10px;background:var(--pro);color:#fff;font-weight:700;font-size:.85rem;text-align:center}
+body.is-pro .probanner{display:block}body.is-pro .free-only{display:none!important}body:not(.is-pro) .pro-only{display:none!important}
+main{flex:1;padding:8px 16px 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;position:relative}
+.card h2{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.muted{color:var(--muted)}.small{font-size:.85rem}.big{font-size:1.9rem;font-weight:800;line-height:1.1}
+.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.grow{flex:1}.wrap{flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.8rem;color:var(--muted);margin:6px 0 2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;padding:9px 14px;background:var(--c);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--c);border:1px solid var(--c)}.btn.sm{padding:5px 10px;font-size:.85rem}.btn.full{width:100%}
+.btn.pro{background:var(--pro)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.list{list-style:none;margin:0;padding:0}.list li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.list li:last-child{border-bottom:0}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--line);color:var(--ink);white-space:nowrap}
+.badge.ok{background:#d9f2e3;color:#126b38}.badge.warn{background:#ffe9cc;color:#8a4b00}.badge.bad{background:#fde0e0;color:#a11}.badge.pro{background:var(--pro);color:#fff}.badge.demo{background:#e0ecff;color:#1b4fa0}
+.meter{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:var(--c)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0 0}.tabs button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.88rem;cursor:pointer;white-space:nowrap}.tabs button.on{background:var(--c);color:#fff;border-color:var(--c)}
+.pro-feat{min-height:120px}
+.lockov{display:none;position:absolute;inset:0;border-radius:14px;background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:12px;z-index:5}
+body:not(.is-pro) .pro-feat>.lockov{display:flex}
+.lockov b{font-size:.95rem}.lockov svg{width:26px;height:26px;fill:var(--pro)}
+.empty{color:var(--muted);text-align:center;padding:14px 0;font-size:.9rem}
+.adslot{border:1px dashed var(--muted);border-radius:10px;padding:12px;text-align:center;color:var(--muted);font-size:.8rem;margin:12px 0}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#222;color:#fff;padding:10px 16px;border-radius:10px;font-size:.9rem;transition:transform .25s;z-index:50;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+footer{padding:16px;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+footer a{text-decoration:none}
+@media print{.bar,.tabs,footer,.probanner,.noprint,.hero,.planline{display:none!important}body{background:#fff;color:#000}.card{border:0}}
+:root{--c:#00838f;--c2:#005662}.step{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}.step h3{margin:0;font-size:.98rem;display:flex;gap:8px;align-items:center}.step .n{width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex:none}
+.step.done{opacity:.75}.step.done .n{background:var(--ok)}.step.skip{opacity:.5}
+.draft{white-space:pre-wrap;background:var(--bg);border-radius:8px;padding:8px;font-size:.85rem;margin:6px 0;font-family:ui-monospace,Menlo,monospace}
+.audit li{font-size:.82rem}.ideas{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.ideas button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 10px;font-size:.82rem;cursor:pointer}
+</style></head>
+<body>
+<header class="bar"><a class="back" href="./">&#8249; Prototypes</a><div class="tier" role="group" aria-label="Plan"><button type="button" data-tier="free">Free</button><button type="button" data-tier="pro">Pro</button></div></header>
+<div class="hero"><img src="img/agenttask-icon.svg" width="48" height="48" alt=""><div><h1>AgentTask</h1><p>Personal task agent</p></div></div>
+<p class="planline free-only">Free: 3 suggestions a day, single-step tasks, drafts you send yourself. Pro idea: $12–20/mo.</p>
+<div class="probanner">Prototype - Pro preview · demo only, no payment</div>
+<main>
+<div class="card"><h2>What do you need done? <span class="badge demo">demo agent</span></h2>
+ <textarea id="goal" style="min-height:70px">Plan a birthday dinner for Sam on Saturday</textarea>
+ <div class="ideas" id="ideas"></div>
+ <div class="row pro-only" style="margin-top:8px"><label for="who" style="margin:0">For</label><select id="who" style="width:auto"><option>Me</option><option>Partner</option><option>Kids</option><option>Parents</option></select><span class="small muted">Family mode</span></div>
+ <button class="btn full" style="margin-top:10px" id="go">Make a plan</button>
+ <p class="small muted" style="margin:6px 0 0" id="quotaTxt"></p>
+ <p class="small muted" style="margin:4px 0 0">This prototype plans with built-in rules on your device. It never sends, books or pays anything.</p></div>
+<div class="card" id="planCard" hidden><h2 id="planTitle"></h2><div id="steps"></div><div class="free-only small muted" id="moreNote"></div></div>
+<div class="card pro-feat" data-feat="Audit log"><h2>Audit log</h2><ul class="list audit" id="audit"></ul></div>
+<div class="card"><h2>Recent plans</h2><ul class="list" id="hist"></ul></div>
+
+</main>
+<footer>Prototype by <b>Free The People Apps</b> · <a href="https://bradarb8888-alt.github.io/">bradarb8888-alt.github.io</a><br>Data stays in this browser (localStorage). No accounts, no trackers, no payments.</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+var APP='agenttask';
+(function(){
+var LOCK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 0 1 6 0v3z"/></svg>';
+var P=window.P={subs:[],
+ k:function(n){return APP+':'+n},
+ get:function(n,d){try{var v=localStorage.getItem(P.k(n));return v==null?d:JSON.parse(v)}catch(e){return d}},
+ set:function(n,v){try{localStorage.setItem(P.k(n),JSON.stringify(v))}catch(e){}},
+ pro:function(){return P.get('tier','free')==='pro'},
+ onTier:function(f){P.subs.push(f)},
+ setTier:function(t){P.set('tier',t);document.body.classList.toggle('is-pro',t==='pro');
+  document.querySelectorAll('.tier button').forEach(function(b){b.classList.toggle('on',b.dataset.tier===t);b.setAttribute('aria-pressed',b.dataset.tier===t)});
+  P.subs.forEach(function(f){f(t)})},
+ esc:function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})},
+ $:function(s,r){return (r||document).querySelector(s)},
+ $$:function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))},
+ toast:function(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(P._t);P._t=setTimeout(function(){t.classList.remove('show')},2200)},
+ money:function(n){return '$'+(Math.round(n*100)/100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')},
+ today:function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},
+ addDays:function(iso,n){var d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)},
+ days:function(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5)},
+ fmtDate:function(iso){return new Date(iso+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})},
+ top:function(el){return Math.max(0,el.getBoundingClientRect().top+window.scrollY-60)},
+ uid:function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)},
+ quota:function(name,limit,period){var key='q_'+name,p=period==='day'?P.today():P.today().slice(0,7),q=P.get(key,{p:p,n:0});if(q.p!==p)q={p:p,n:0};
+  return{used:q.n,limit:limit,left:Math.max(0,limit-q.n),ok:function(){return P.pro()||q.n<limit},use:function(){q.n++;P.set(key,q)}}},
+ hash:function(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0},
+ download:function(name,text,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type||'text/plain'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)},
+ copy:function(text){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){P.toast('Copied')},function(){P.toast('Copy failed')})}else{var t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');P.toast('Copied')}catch(e){P.toast('Copy failed')}t.remove()}}
+};
+var qs=new URLSearchParams(location.search);
+if(qs.get('reset')==='1'){Object.keys(localStorage).filter(function(k){return k.indexOf(APP+':')===0}).forEach(function(k){localStorage.removeItem(k)})}
+if(qs.get('tier')==='pro'||qs.get('tier')==='free')P.set('tier',qs.get('tier'));
+document.addEventListener('DOMContentLoaded',function(){
+ P.$$('.pro-feat').forEach(function(el){var o=document.createElement('div');o.className='lockov';
+  o.innerHTML=LOCK+'<b>'+P.esc(el.dataset.feat||'Pro feature')+'</b><span class="small muted">Included in Pro</span><button class="btn pro sm" type="button">Preview Pro</button>';
+  o.querySelector('button').onclick=function(){P.setTier('pro');P.toast('Pro preview on (demo, no payment)')};el.appendChild(o)});
+ P.$$('.tier button').forEach(function(b){b.onclick=function(){P.setTier(b.dataset.tier)}});
+ if(window.init)window.init();
+ P.setTier(P.get('tier','free'));
+});
+})();
+
+var LIMIT=3;
+function T(goal){var g=goal.toLowerCase(),name=(goal.match(/for ([A-Z][a-z]+)/)||[])[1]||'everyone',day=(goal.match(/\b(mon|tues|wednes|thurs|fri|satur|sun)day\b/i)||[''])[0]||'the date';
+ if(/dinner|party|birthday|celebrat/.test(g))return[
+  {t:'Invite the guests',k:'draft',d:'Hi! We are getting together for '+name+'\'s birthday dinner on '+day+' at 7 pm. Can you make it? Let me know by Thursday so I can book a table.'},
+  {t:'Book a table for 6',k:'draft',d:'Hello, I would like to reserve a table for 6 on '+day+' at 7:00 pm under the name Brad, for a birthday. Is there anything we should know about cake or decorations?'},
+  {t:'Order a cake',k:'list',d:'Chocolate cake, serves 8, "Happy Birthday '+name+'"\nPick up '+day+' by 5 pm'},
+  {t:'Gift and card',k:'list',d:'Card + gift under $50\nWrap by Friday night'},
+  {t:'Reminder the day before',k:'rem',d:'Confirm headcount with the restaurant, '+day+' minus 1 day, 10 am'}];
+ if(/mov(e|ing)/.test(g))return[
+  {t:'Ask 3 movers for quotes',k:'draft',d:'Hello, I am moving a 2-bedroom apartment and would like a quote. Pickup and drop-off are both in the city, preferred date '+day+'. Please include hourly rate, minimum hours and insurance.'},
+  {t:'Transfer utilities',k:'list',d:'Hydro: stop old / start new\nInternet: book install\nTenant insurance: update address'},
+  {t:'Change of address',k:'list',d:'Bank, employer, driver\'s licence, mail forwarding'},
+  {t:'Packing schedule',k:'rem',d:'Start with books and off-season clothes, 10 days out'}];
+ if(/trip|travel|flight|vacation|holiday/.test(g))return[
+  {t:'Out-of-office message',k:'draft',d:'Thanks for your email. I am away until '+day+' with limited access. For anything urgent, please contact the office.'},
+  {t:'Compare flights',k:'list',d:'Check 3 sites, flexible ±1 day\nCarry-on only?'},
+  {t:'Book a place to stay',k:'list',d:'Near transit, free cancellation, under $180/night'},
+  {t:'Packing list',k:'list',d:'Passport, chargers, adapter, medicine, rain jacket'}];
+ if(/bill|pay|budget|refund|charge/.test(g))return[
+  {t:'Dispute the charge',k:'draft',d:'Hello, I see a charge on my statement that I do not recognize. Please send details of this transaction and reverse it if it cannot be verified. Thank you.'},
+  {t:'List upcoming bills',k:'list',d:'Rent (1st), phone (12th), car insurance (20th)'},
+  {t:'Set payment reminders',k:'rem',d:'3 days before each due date'}];
+ if(/dentist|doctor|appointment|vet|haircut/.test(g))return[
+  {t:'Request an appointment',k:'draft',d:'Hello, I would like to book an appointment. I am available weekday mornings or '+day+'. Please let me know the earliest opening. Thank you.'},
+  {t:'Add to calendar',k:'rem',d:'Appointment reminder, 1 day and 2 hours before'},
+  {t:'Prepare questions',k:'list',d:'Write down symptoms, medications, questions'}];
+ return[
+  {t:'Write the first message',k:'draft',d:'Hi, I am reaching out about: '+goal.trim()+'. Could you let me know the next step and a good time to talk this week?'},
+  {t:'Break it into tasks',k:'list',d:'1. Gather what you need\n2. Do the main task\n3. Follow up'},
+  {t:'Follow-up reminder',k:'rem',d:'In 3 days if there is no reply'}]}
+var plans=P.get('plans',[]),audit=P.get('audit',[]),cur=null;
+function log(m){audit.unshift({at:new Date().toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}),m:m});P.set('audit',audit.slice(0,50));rAudit()}
+function rAudit(){P.$('#audit').innerHTML=audit.length?audit.map(function(a){return'<li><span class="muted" style="width:96px">'+a.at+'</span><span class="grow">'+P.esc(a.m)+'</span></li>'}).join(''):'<li class="empty">Nothing yet. Every approval is recorded here.</li>'}
+function quota(){var q=P.quota('plans',LIMIT,'day');P.$('#quotaTxt').textContent=P.pro()?'Higher quota (Pro preview)':q.left+' of '+LIMIT+' free suggestions left today';return q}
+function rPlan(){if(!cur){P.$('#planCard').hidden=true;return}P.$('#planCard').hidden=false;P.$('#planTitle').innerHTML=P.esc(cur.goal)+(cur.who&&cur.who!=='Me'?' <span class="badge">'+P.esc(cur.who)+'</span>':'');
+ var steps=P.pro()?cur.steps:cur.steps.slice(0,1);
+ P.$('#steps').innerHTML=steps.map(function(s,i){var st=s.st||'';return'<div class="step '+st+'"><h3><span class="n">'+(i+1)+'</span><span class="grow">'+P.esc(s.t)+'</span>'+(st==='done'?'<span class="badge ok">approved</span>':st==='skip'?'<span class="badge">skipped</span>':'')+'</h3><div class="draft">'+P.esc(s.d)+'</div>'+
+  '<div class="row wrap">'+(s.k==='draft'?'<button class="btn ghost sm" data-copy="'+i+'">Copy draft</button>':'')+(P.pro()&&!st?'<button class="btn pro sm" data-ok="'+i+'">Approve</button><button class="btn ghost sm" data-skip="'+i+'">Skip</button>':'')+(!P.pro()?'<span class="small muted">You send it yourself</span>':'')+'</div></div>'}).join('');
+ P.$('#moreNote').textContent=cur.steps.length>1?'+ '+(cur.steps.length-1)+' more steps. Pro runs multi-step plans with your approval at each step.':''}
+function rHist(){P.$('#hist').innerHTML=plans.length?plans.slice(0,6).map(function(p,i){var d=p.steps.filter(function(s){return s.st==='done'}).length;return'<li><div class="grow"><b>'+P.esc(p.goal)+'</b><div class="small muted">'+p.steps.length+' steps · '+d+' approved</div></div><button class="btn ghost sm" data-open="'+i+'">Open</button></li>'}).join(''):'<li class="empty">No plans yet</li>'}
+function save(){P.set('plans',plans);rPlan();rHist()}
+function init(){['Plan a birthday dinner for Sam on Saturday','Moving apartments on Friday','Dispute a charge on my card','Book a dentist appointment','Weekend trip to Victoria'].forEach(function(t){var b=document.createElement('button');b.type='button';b.textContent=t;b.onclick=function(){P.$('#goal').value=t};P.$('#ideas').appendChild(b)});
+ P.$('#go').onclick=function(){var g=P.$('#goal').value.trim();if(!g)return;var q=quota();if(!q.ok()){P.toast('Free limit: 3 a day');return}q.use();quota();cur={goal:g,who:P.pro()?P.$('#who').value:'Me',steps:T(g)};plans.unshift(cur);log('Plan created: '+g);save();P.toast('Plan ready (demo)')};
+ P.$('#steps').onclick=function(e){var b=e.target.closest('button');if(!b)return;var d=b.dataset;
+  if(d.copy!=null)P.copy(cur.steps[+d.copy].d);
+  if(d.ok!=null){var s=cur.steps[+d.ok];s.st='done';log('Approved: '+s.t+(s.k==='draft'?' (demo: marked ready, not sent)':''));save()}
+  if(d.skip!=null){var s2=cur.steps[+d.skip];s2.st='skip';log('Skipped: '+s2.t);save()}};
+ P.$('#hist').onclick=function(e){var i=e.target.dataset.open;if(i!=null){cur=plans[+i];rPlan()}};
+ P.onTier(function(){quota();rPlan();rHist();rAudit()})}
+window.shotPrep=function(t){P.$('#go').click();if(t==='pro'){P.$('[data-ok="0"]').click();P.$('[data-ok="1"]').click()}window.shotScroll=P.top(P.$('#planCard'))-(t==='pro'?0:180)};
+
+</script>
+</body></html>

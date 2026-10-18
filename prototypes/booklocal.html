@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BookLocal: Transparent plumber booking (prototype) | Free The People Apps</title>
+<meta name="description" content="BookLocal prototype: Transparent plumber booking. Interactive free and Pro preview by Free The People Apps.">
+<meta name="theme-color" content="#1565c0">
+<link rel="icon" href="img/booklocal-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="img/booklocal-icon.png">
+<style>:root{--c:#1e6fd9;--c2:#0b4fb0;--bg:#f4f6f9;--card:#fff;--ink:#17202b;--muted:#5d6977;--line:#e3e7ec;--ok:#1a8f4c;--warn:#c26a00;--bad:#c62828;--pro:#7b3fe4}
+@media (prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#18202a;--ink:#e8edf3;--muted:#9aa6b4;--line:#2a3542}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);max-width:560px;margin:auto;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--c)}button,input,select,textarea{font:inherit;color:inherit}
+.bar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--c);color:#fff}
+.bar .back{color:#fff;text-decoration:none;font-weight:600;font-size:.95rem}
+.tier{display:flex;background:rgba(255,255,255,.18);border-radius:999px;padding:3px}
+.tier button{border:0;background:none;color:#fff;padding:5px 14px;border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer}
+.tier button.on{background:#fff;color:var(--c)}
+body.is-pro .tier button.on{color:var(--pro)}
+.hero{display:flex;gap:12px;align-items:center;padding:14px 16px 6px}
+.hero img{border-radius:12px;flex:none}.hero h1{margin:0;font-size:1.35rem}.hero p{margin:0;color:var(--muted);font-size:.9rem}
+.planline{margin:6px 16px 0;font-size:.82rem;color:var(--muted)}
+.probanner{display:none;margin:8px 16px 0;padding:8px 12px;border-radius:10px;background:var(--pro);color:#fff;font-weight:700;font-size:.85rem;text-align:center}
+body.is-pro .probanner{display:block}body.is-pro .free-only{display:none!important}body:not(.is-pro) .pro-only{display:none!important}
+main{flex:1;padding:8px 16px 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;position:relative}
+.card h2{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.muted{color:var(--muted)}.small{font-size:.85rem}.big{font-size:1.9rem;font-weight:800;line-height:1.1}
+.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.grow{flex:1}.wrap{flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.8rem;color:var(--muted);margin:6px 0 2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;padding:9px 14px;background:var(--c);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--c);border:1px solid var(--c)}.btn.sm{padding:5px 10px;font-size:.85rem}.btn.full{width:100%}
+.btn.pro{background:var(--pro)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.list{list-style:none;margin:0;padding:0}.list li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.list li:last-child{border-bottom:0}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--line);color:var(--ink);white-space:nowrap}
+.badge.ok{background:#d9f2e3;color:#126b38}.badge.warn{background:#ffe9cc;color:#8a4b00}.badge.bad{background:#fde0e0;color:#a11}.badge.pro{background:var(--pro);color:#fff}.badge.demo{background:#e0ecff;color:#1b4fa0}
+.meter{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:var(--c)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0 0}.tabs button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.88rem;cursor:pointer;white-space:nowrap}.tabs button.on{background:var(--c);color:#fff;border-color:var(--c)}
+.pro-feat{min-height:120px}
+.lockov{display:none;position:absolute;inset:0;border-radius:14px;background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:12px;z-index:5}
+body:not(.is-pro) .pro-feat>.lockov{display:flex}
+.lockov b{font-size:.95rem}.lockov svg{width:26px;height:26px;fill:var(--pro)}
+.empty{color:var(--muted);text-align:center;padding:14px 0;font-size:.9rem}
+.adslot{border:1px dashed var(--muted);border-radius:10px;padding:12px;text-align:center;color:var(--muted);font-size:.8rem;margin:12px 0}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#222;color:#fff;padding:10px 16px;border-radius:10px;font-size:.9rem;transition:transform .25s;z-index:50;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+footer{padding:16px;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+footer a{text-decoration:none}
+@media print{.bar,.tabs,footer,.probanner,.noprint,.hero,.planline{display:none!important}body{background:#fff;color:#000}.card{border:0}}
+:root{--c:#1565c0;--c2:#0d47a1}.pro-card{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}.pro-card.feat{border-color:var(--pro);box-shadow:0 0 0 1px var(--pro) inset}
+.pro-card h3{margin:0;font-size:1rem}.stars{color:#e6a700;font-size:.85rem;letter-spacing:1px}
+.prices{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:.85rem;margin:6px 0}
+.cal{display:grid;grid-template-columns:44px repeat(7,1fr);gap:3px;font-size:.7rem;text-align:center}.cal button{border:0;border-radius:6px;padding:7px 0;background:var(--line);cursor:pointer;font-size:.7rem}.cal button.on{background:var(--ok);color:#fff}
+.msg{background:var(--bg);border-radius:10px;padding:8px;margin:4px 0;font-size:.88rem}.msg.me{background:#e0ecff;color:#123;margin-left:30px}
+.bars{display:flex;align-items:flex-end;gap:4px;height:80px}.bars div{flex:1;background:var(--c);border-radius:3px 3px 0 0}
+</style></head>
+<body>
+<header class="bar"><a class="back" href="./">&#8249; Prototypes</a><div class="tier" role="group" aria-label="Plan"><button type="button" data-tier="free">Free</button><button type="button" data-tier="pro">Pro</button></div></header>
+<div class="hero"><img src="img/booklocal-icon.svg" width="48" height="48" alt=""><div><h1>BookLocal</h1><p>Transparent plumber booking</p></div></div>
+<p class="planline free-only">Free for customers: verified pros, price ranges, booking requests. Pro for plumbers idea: $19–39/mo.</p>
+<div class="probanner">Prototype - Pro preview · demo only, no payment</div>
+<main>
+<div class="tabs"><button class="on" data-tab="find">Find a pro</button><button data-tab="mine">Requests <span id="reqN"></span></button><button data-tab="pro">For plumbers</button></div>
+<section id="tab-find">
+ <div class="card"><div class="grid2"><div><label for="svc">Service</label><select id="svc"></select></div><div><label for="sort">Sort</label><select id="sort"><option value="rating">Top rated</option><option value="price">Lowest price</option><option value="soon">Soonest</option></select></div></div>
+ <p class="small muted" style="margin:8px 0 0">Every price range is posted by the plumber up front. Sample listings for this prototype.</p></div>
+ <div id="pros"></div>
+</section>
+<section id="tab-mine" hidden><div class="card"><h2>My booking requests</h2><ul class="list" id="mine"></ul></div></section>
+<section id="tab-pro" hidden>
+ <div class="card"><div class="row"><div class="grow"><b>Northshore Plumbing</b> <span class="badge">you</span><div class="small muted">Demo business account</div></div><span class="badge pro pro-only">Featured</span></div></div>
+ <div class="card pro-feat" data-feat="Booking inbox & messaging"><h2>Requests</h2><div id="inbox"></div></div>
+ <div class="card pro-feat" data-feat="Availability calendar"><h2>Availability</h2><div class="cal" id="cal"></div></div>
+ <div class="card pro-feat" data-feat="Deposits & placement"><h2>Settings</h2><div class="grid2"><div><label for="dep">Booking deposit</label><select id="dep"><option value="0">None</option><option value="25">$25</option><option value="50">$50</option></select></div><div><label>Commission</label><b>5% (free: 12%)</b></div></div><label style="display:flex;gap:8px;align-items:center;color:inherit;font-size:.9rem;margin-top:8px"><input type="checkbox" id="prio" checked style="width:auto"> Priority placement in search</label></div>
+ <div class="card pro-feat" data-feat="Analytics"><h2>Last 14 days</h2><div class="grid2" style="margin-bottom:8px"><div><div class="big" id="views">0</div><div class="small muted">profile views</div></div><div><div class="big" id="leads">0</div><div class="small muted">requests</div></div></div><div class="bars" id="bars"></div></div>
+</section>
+
+</main>
+<footer>Prototype by <b>Free The People Apps</b> · <a href="https://bradarb8888-alt.github.io/">bradarb8888-alt.github.io</a><br>Data stays in this browser (localStorage). No accounts, no trackers, no payments.</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+var APP='booklocal';
+(function(){
+var LOCK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 0 1 6 0v3z"/></svg>';
+var P=window.P={subs:[],
+ k:function(n){return APP+':'+n},
+ get:function(n,d){try{var v=localStorage.getItem(P.k(n));return v==null?d:JSON.parse(v)}catch(e){return d}},
+ set:function(n,v){try{localStorage.setItem(P.k(n),JSON.stringify(v))}catch(e){}},
+ pro:function(){return P.get('tier','free')==='pro'},
+ onTier:function(f){P.subs.push(f)},
+ setTier:function(t){P.set('tier',t);document.body.classList.toggle('is-pro',t==='pro');
+  document.querySelectorAll('.tier button').forEach(function(b){b.classList.toggle('on',b.dataset.tier===t);b.setAttribute('aria-pressed',b.dataset.tier===t)});
+  P.subs.forEach(function(f){f(t)})},
+ esc:function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})},
+ $:function(s,r){return (r||document).querySelector(s)},
+ $$:function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))},
+ toast:function(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(P._t);P._t=setTimeout(function(){t.classList.remove('show')},2200)},
+ money:function(n){return '$'+(Math.round(n*100)/100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')},
+ today:function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},
+ addDays:function(iso,n){var d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)},
+ days:function(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5)},
+ fmtDate:function(iso){return new Date(iso+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})},
+ top:function(el){return Math.max(0,el.getBoundingClientRect().top+window.scrollY-60)},
+ uid:function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)},
+ quota:function(name,limit,period){var key='q_'+name,p=period==='day'?P.today():P.today().slice(0,7),q=P.get(key,{p:p,n:0});if(q.p!==p)q={p:p,n:0};
+  return{used:q.n,limit:limit,left:Math.max(0,limit-q.n),ok:function(){return P.pro()||q.n<limit},use:function(){q.n++;P.set(key,q)}}},
+ hash:function(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0},
+ download:function(name,text,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type||'text/plain'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)},
+ copy:function(text){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){P.toast('Copied')},function(){P.toast('Copy failed')})}else{var t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');P.toast('Copied')}catch(e){P.toast('Copy failed')}t.remove()}}
+};
+var qs=new URLSearchParams(location.search);
+if(qs.get('reset')==='1'){Object.keys(localStorage).filter(function(k){return k.indexOf(APP+':')===0}).forEach(function(k){localStorage.removeItem(k)})}
+if(qs.get('tier')==='pro'||qs.get('tier')==='free')P.set('tier',qs.get('tier'));
+document.addEventListener('DOMContentLoaded',function(){
+ P.$$('.pro-feat').forEach(function(el){var o=document.createElement('div');o.className='lockov';
+  o.innerHTML=LOCK+'<b>'+P.esc(el.dataset.feat||'Pro feature')+'</b><span class="small muted">Included in Pro</span><button class="btn pro sm" type="button">Preview Pro</button>';
+  o.querySelector('button').onclick=function(){P.setTier('pro');P.toast('Pro preview on (demo, no payment)')};el.appendChild(o)});
+ P.$$('.tier button').forEach(function(b){b.onclick=function(){P.setTier(b.dataset.tier)}});
+ if(window.init)window.init();
+ P.setTier(P.get('tier','free'));
+});
+})();
+
+var SV=['Leaky faucet','Clogged drain','Toilet repair','Water heater','Emergency (24/7)'];
+var PROS=[
+ {id:'you',n:'Northshore Plumbing',r:4.8,rv:63,yrs:9,pr:[[120,180],[140,220],[110,200],[1400,2100],[220,350]],next:1,area:'North Van'},
+ {id:'b',n:'Kingsway Pipe & Drain',r:4.9,rv:212,yrs:15,pr:[[130,190],[150,250],[120,210],[1500,2300],[250,400]],next:2,area:'Burnaby'},
+ {id:'c',n:'Fraser Flow Plumbing',r:4.6,rv:88,yrs:6,pr:[[95,160],[120,190],[100,170],[1300,1900],[200,320]],next:0,area:'Vancouver East'},
+ {id:'d',n:'Coastal Rooter Co.',r:4.7,rv:140,yrs:11,pr:[[110,170],[125,210],[115,190],[1450,2200],[240,380]],next:3,area:'Richmond'}];
+var REV=['"Showed up on time and the price matched the range."','"Fixed our water heater same day."','"Clear quote, no surprises."'];
+var reqs=P.get('reqs',null),avail=P.get('avail',null),openForm=null;
+if(!reqs){reqs=[{id:'r1',pro:'you',svc:1,name:'Alex M.',when:P.addDays(P.today(),2),note:'Kitchen sink drains slowly',st:'pending',msgs:[]}];P.set('reqs',reqs)}
+if(!avail){avail={};for(var d=0;d<7;d++)for(var s=0;s<3;s++)avail[d+'-'+s]=(d*3+s)%4!==0;P.set('avail',avail)}
+function list(){var sv=+P.$('#svc').value,so=P.$('#sort').value,l=PROS.slice().sort(function(a,b){return so==='price'?a.pr[sv][0]-b.pr[sv][0]:so==='soon'?a.next-b.next:b.r-a.r});
+ if(P.pro()&&P.$('#prio').checked){l=l.filter(function(p){return p.id==='you'}).concat(l.filter(function(p){return p.id!=='you'}))}
+ P.$('#pros').innerHTML=l.map(function(p){var f=P.pro()&&p.id==='you'&&P.$('#prio').checked,pr=p.pr[sv];return'<div class="card pro-card'+(f?' feat':'')+'"><div class="row"><div class="grow"><h3>'+p.n+'</h3><div class="small muted">'+p.area+' · '+p.yrs+' yrs · <span class="badge ok">verified licence</span></div></div>'+(f?'<span class="badge pro">Featured</span>':'')+'</div>'+
+  '<div class="stars">'+'★★★★★'.slice(0,Math.round(p.r))+' <span class="muted">'+p.r+' ('+p.rv+')</span></div><div class="prices"><span>'+SV[sv]+'</span><b>'+P.money(pr[0]).replace('.00','')+'–'+P.money(pr[1]).replace('.00','')+'</b><span class="muted">Next opening</span><span>'+(p.next===0?'Today':P.fmtDate(P.addDays(P.today(),p.next)))+'</span></div>'+
+  (openForm===p.id?'<div><label for="bn">Your name</label><input id="bn" value="Brad"><label for="bd">Preferred date</label><input id="bd" type="date" value="'+P.addDays(P.today(),Math.max(1,p.next))+'"><label for="bt">What\'s wrong?</label><input id="bt" placeholder="e.g. dripping bathroom tap"><div class="row" style="margin-top:8px"><button class="btn grow" data-send="'+p.id+'">Send request</button><button class="btn ghost" data-cancel="1">Cancel</button></div><p class="small muted" style="margin:6px 0 0">Demo: saved in this browser only.</p></div>':'<button class="btn full" data-book="'+p.id+'">Request booking</button>')+'</div>'}).join('')}
+function proName(id){return PROS.filter(function(p){return p.id===id})[0].n}
+function mine(){P.$('#reqN').textContent='('+reqs.length+')';P.$('#mine').innerHTML=reqs.length?reqs.map(function(r){return'<li><div class="grow"><b>'+proName(r.pro)+'</b><div class="small muted">'+SV[r.svc]+' · '+P.fmtDate(r.when)+(r.note?' · '+P.esc(r.note):'')+'</div>'+(r.msgs.length?'<div class="small">Plumber: '+P.esc(r.msgs[r.msgs.length-1])+'</div>':'')+'</div><span class="badge '+(r.st==='confirmed'?'ok':'warn')+'">'+r.st+'</span></li>'}).join(''):'<li class="empty">No requests yet</li>'}
+function inbox(){var l=reqs.filter(function(r){return r.pro==='you'});var dep=+P.$('#dep').value;P.$('#inbox').innerHTML=l.length?l.map(function(r){return'<div class="pro-card"><div class="row"><b class="grow">'+P.esc(r.name)+'</b><span class="badge '+(r.st==='confirmed'?'ok':'warn')+'">'+r.st+'</span></div><div class="small muted">'+SV[r.svc]+' · '+P.fmtDate(r.when)+(dep?' · $'+dep+' deposit requested (demo)':'')+'</div>'+(r.note?'<div class="msg">'+P.esc(r.note)+'</div>':'')+r.msgs.map(function(m){return'<div class="msg me">'+P.esc(m)+'</div>'}).join('')+
+  '<div class="row" style="margin-top:6px"><input class="grow" placeholder="Reply…" id="m_'+r.id+'" aria-label="Reply"><button class="btn sm" data-reply="'+r.id+'">Send</button>'+(r.st!=='confirmed'?'<button class="btn pro sm" data-confirm="'+r.id+'">Confirm</button>':'')+'</div></div>'}).join(''):'<p class="empty">No requests yet. Book Northshore from the customer tab to see one arrive.</p>'}
+function cal(){var h='<span></span>';for(var d=0;d<7;d++)h+='<span>'+new Date(P.addDays(P.today(),d)+'T12:00:00').toLocaleDateString(undefined,{weekday:'short'})+'</span>';['AM','PM','Eve'].forEach(function(s,si){h+='<span style="align-self:center">'+s+'</span>';for(var d=0;d<7;d++){var k=d+'-'+si;h+='<button type="button" class="'+(avail[k]?'on':'')+'" data-slot="'+k+'" aria-label="'+s+' day '+(d+1)+'">'+(avail[k]?'open':'–')+'</button>'}});P.$('#cal').innerHTML=h}
+function stats(){var v=[],tot=0;for(var i=0;i<14;i++){var x=18+((i*37)%23)+(P.$('#prio').checked?12:0);v.push(x);tot+=x}P.$('#views').textContent=tot;P.$('#leads').textContent=reqs.filter(function(r){return r.pro==='you'}).length+9;var mx=Math.max.apply(null,v);P.$('#bars').innerHTML=v.map(function(x){return'<div style="height:'+(x/mx*100)+'%"></div>'}).join('')}
+function all(){list();mine();inbox();cal();stats()}
+function tab(t){P.$$('.tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.tab===t)});['find','mine','pro'].forEach(function(x){P.$('#tab-'+x).hidden=x!==t})}
+function save(){P.set('reqs',reqs);all()}
+function init(){P.$('#svc').innerHTML=SV.map(function(s,i){return'<option value="'+i+'">'+s+'</option>'}).join('');
+ P.$('#svc').onchange=P.$('#sort').onchange=list;P.$('#prio').onchange=function(){list();stats()};P.$('#dep').onchange=inbox;
+ P.$('.tabs').onclick=function(e){var b=e.target.closest('button');if(b)tab(b.dataset.tab)};
+ document.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var d=b.dataset;
+  if(d.book){openForm=d.book;list()}if(d.cancel){openForm=null;list()}
+  if(d.send){reqs.unshift({id:P.uid(),pro:d.send,svc:+P.$('#svc').value,name:P.$('#bn').value||'Customer',when:P.$('#bd').value,note:P.$('#bt').value,st:'pending',msgs:[]});openForm=null;save();P.toast('Request sent to '+proName(d.send)+' (demo)')}
+  if(d.reply){var r=reqs.filter(function(x){return x.id===d.reply})[0],inp=P.$('#m_'+d.reply);if(inp.value.trim()){r.msgs.push(inp.value.trim());save()}}
+  if(d.confirm){reqs.filter(function(x){return x.id===d.confirm})[0].st='confirmed';save();P.toast('Booking confirmed')}
+  if(d.slot){avail[d.slot]=!avail[d.slot];P.set('avail',avail);cal()}});
+ P.onTier(all)}
+window.shotPrep=function(t){if(t==='pro'){var r=reqs[0];r.msgs.push('Hi Alex, I can come Thursday 9-11 am. Range is $140-$220.');save();tab('pro')}};
+
+</script>
+</body></html>

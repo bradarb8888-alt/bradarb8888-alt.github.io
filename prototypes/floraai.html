@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FloraAI: Plant identifier & care (prototype) | Free The People Apps</title>
+<meta name="description" content="FloraAI prototype: Plant identifier & care. Interactive free and Pro preview by Free The People Apps.">
+<meta name="theme-color" content="#2e7d32">
+<link rel="icon" href="img/floraai-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="img/floraai-icon.png">
+<style>:root{--c:#1e6fd9;--c2:#0b4fb0;--bg:#f4f6f9;--card:#fff;--ink:#17202b;--muted:#5d6977;--line:#e3e7ec;--ok:#1a8f4c;--warn:#c26a00;--bad:#c62828;--pro:#7b3fe4}
+@media (prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#18202a;--ink:#e8edf3;--muted:#9aa6b4;--line:#2a3542}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);max-width:560px;margin:auto;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--c)}button,input,select,textarea{font:inherit;color:inherit}
+.bar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--c);color:#fff}
+.bar .back{color:#fff;text-decoration:none;font-weight:600;font-size:.95rem}
+.tier{display:flex;background:rgba(255,255,255,.18);border-radius:999px;padding:3px}
+.tier button{border:0;background:none;color:#fff;padding:5px 14px;border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer}
+.tier button.on{background:#fff;color:var(--c)}
+body.is-pro .tier button.on{color:var(--pro)}
+.hero{display:flex;gap:12px;align-items:center;padding:14px 16px 6px}
+.hero img{border-radius:12px;flex:none}.hero h1{margin:0;font-size:1.35rem}.hero p{margin:0;color:var(--muted);font-size:.9rem}
+.planline{margin:6px 16px 0;font-size:.82rem;color:var(--muted)}
+.probanner{display:none;margin:8px 16px 0;padding:8px 12px;border-radius:10px;background:var(--pro);color:#fff;font-weight:700;font-size:.85rem;text-align:center}
+body.is-pro .probanner{display:block}body.is-pro .free-only{display:none!important}body:not(.is-pro) .pro-only{display:none!important}
+main{flex:1;padding:8px 16px 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;position:relative}
+.card h2{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.muted{color:var(--muted)}.small{font-size:.85rem}.big{font-size:1.9rem;font-weight:800;line-height:1.1}
+.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.grow{flex:1}.wrap{flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.8rem;color:var(--muted);margin:6px 0 2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;padding:9px 14px;background:var(--c);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--c);border:1px solid var(--c)}.btn.sm{padding:5px 10px;font-size:.85rem}.btn.full{width:100%}
+.btn.pro{background:var(--pro)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.list{list-style:none;margin:0;padding:0}.list li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.list li:last-child{border-bottom:0}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--line);color:var(--ink);white-space:nowrap}
+.badge.ok{background:#d9f2e3;color:#126b38}.badge.warn{background:#ffe9cc;color:#8a4b00}.badge.bad{background:#fde0e0;color:#a11}.badge.pro{background:var(--pro);color:#fff}.badge.demo{background:#e0ecff;color:#1b4fa0}
+.meter{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:var(--c)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0 0}.tabs button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.88rem;cursor:pointer;white-space:nowrap}.tabs button.on{background:var(--c);color:#fff;border-color:var(--c)}
+.pro-feat{min-height:120px}
+.lockov{display:none;position:absolute;inset:0;border-radius:14px;background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:12px;z-index:5}
+body:not(.is-pro) .pro-feat>.lockov{display:flex}
+.lockov b{font-size:.95rem}.lockov svg{width:26px;height:26px;fill:var(--pro)}
+.empty{color:var(--muted);text-align:center;padding:14px 0;font-size:.9rem}
+.adslot{border:1px dashed var(--muted);border-radius:10px;padding:12px;text-align:center;color:var(--muted);font-size:.8rem;margin:12px 0}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#222;color:#fff;padding:10px 16px;border-radius:10px;font-size:.9rem;transition:transform .25s;z-index:50;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+footer{padding:16px;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+footer a{text-decoration:none}
+@media print{.bar,.tabs,footer,.probanner,.noprint,.hero,.planline{display:none!important}body{background:#fff;color:#000}.card{border:0}}
+:root{--c:#2e7d32;--c2:#1b5e20}.drop{border:2px dashed var(--line);border-radius:14px;padding:14px;text-align:center;cursor:pointer;display:block}
+.drop img,.drop svg{max-width:100%;max-height:200px;border-radius:10px;display:block;margin:0 auto 6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.chips button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 11px;cursor:pointer;font-size:.85rem}
+.res h3{margin:0;font-size:1.25rem}.res i{font-style:italic;color:var(--muted)}
+.care{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.care div{background:var(--bg);border-radius:10px;padding:8px}.care b{display:block;font-size:.75rem;color:var(--muted);font-weight:600}
+.scan{height:4px;background:linear-gradient(90deg,transparent,var(--c),transparent);background-size:50% 100%;animation:sc 1s linear infinite;border-radius:4px;margin:8px 0}@keyframes sc{from{background-position:-50% 0}to{background-position:150% 0}}
+</style></head>
+<body>
+<header class="bar"><a class="back" href="./">&#8249; Prototypes</a><div class="tier" role="group" aria-label="Plan"><button type="button" data-tier="free">Free</button><button type="button" data-tier="pro">Pro</button></div></header>
+<div class="hero"><img src="img/floraai-icon.svg" width="48" height="48" alt=""><div><h1>FloraAI</h1><p>Plant identifier & care</p></div></div>
+<p class="planline free-only">Free: 5 IDs a month, basic care, a quick health check. Pro idea: $5–8/mo or $49/yr.</p>
+<div class="probanner">Prototype - Pro preview · demo only, no payment</div>
+<main>
+<div class="card">
+ <h2>Identify a plant <span class="badge demo">demo AI</span></h2>
+ <label class="drop" for="file" id="drop"><span id="prev"><svg viewBox="0 0 120 80" width="120" height="80" aria-hidden="true"><path d="M60 75C60 45 75 20 105 8 108 40 92 62 60 66" fill="#4caf50"/><path d="M60 75c0-25-10-45-45-58-3 32 14 50 45 54" fill="#81c784"/></svg></span><b>Take or choose a photo</b><div class="small muted">The photo stays on this device. Matching is a local demo, not a real AI model.</div></label>
+ <input type="file" id="file" accept="image/*" capture="environment" hidden>
+ <div class="chips" id="samples"><span class="small muted" style="align-self:center">Samples:</span></div>
+ <div class="row" style="margin-top:10px"><span class="small muted grow" id="quotaTxt"></span><div class="meter free-only" style="width:100px"><i id="quotaBar"></i></div></div>
+</div>
+<div class="card res" id="result" hidden></div>
+<div class="card pro-feat" data-feat="Full disease & pest diagnosis" id="diagCard"><h2>Full diagnosis</h2><div id="diag" class="small"><p class="muted">Identify a plant to see a full health report.</p></div></div>
+<div class="card pro-feat" data-feat="Local care schedule"><h2>Care schedule for your climate</h2>
+ <div class="grid2"><div><label for="climate">Climate</label><select id="climate"><option value="1">Coastal / mild</option><option value="1.3">Hot & dry</option><option value="0.8">Cool & humid</option><option value="1.1">Indoor heated (winter)</option></select></div>
+ <div><label for="season">Season</label><select id="season"><option value="1.2">Summer</option><option value="1">Spring</option><option value="0.9">Autumn</option><option value="0.7">Winter</option></select></div></div>
+ <div id="sched" class="small" style="margin-top:8px"></div></div>
+<div class="card"><h2>My plants &amp; reminders</h2><ul class="list" id="mine"></ul></div>
+<div class="card pro-feat" data-feat="Plant journal"><h2>Journal</h2><div class="row"><input id="jText" class="grow" placeholder="New leaf on the monstera!"><button class="btn sm" id="jAdd">Add</button></div><ul class="list" id="jList"></ul></div>
+
+</main>
+<footer>Prototype by <b>Free The People Apps</b> · <a href="https://bradarb8888-alt.github.io/">bradarb8888-alt.github.io</a><br>Data stays in this browser (localStorage). No accounts, no trackers, no payments.</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+var APP='floraai';
+(function(){
+var LOCK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 0 1 6 0v3z"/></svg>';
+var P=window.P={subs:[],
+ k:function(n){return APP+':'+n},
+ get:function(n,d){try{var v=localStorage.getItem(P.k(n));return v==null?d:JSON.parse(v)}catch(e){return d}},
+ set:function(n,v){try{localStorage.setItem(P.k(n),JSON.stringify(v))}catch(e){}},
+ pro:function(){return P.get('tier','free')==='pro'},
+ onTier:function(f){P.subs.push(f)},
+ setTier:function(t){P.set('tier',t);document.body.classList.toggle('is-pro',t==='pro');
+  document.querySelectorAll('.tier button').forEach(function(b){b.classList.toggle('on',b.dataset.tier===t);b.setAttribute('aria-pressed',b.dataset.tier===t)});
+  P.subs.forEach(function(f){f(t)})},
+ esc:function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})},
+ $:function(s,r){return (r||document).querySelector(s)},
+ $$:function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))},
+ toast:function(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(P._t);P._t=setTimeout(function(){t.classList.remove('show')},2200)},
+ money:function(n){return '$'+(Math.round(n*100)/100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')},
+ today:function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},
+ addDays:function(iso,n){var d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)},
+ days:function(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5)},
+ fmtDate:function(iso){return new Date(iso+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})},
+ top:function(el){return Math.max(0,el.getBoundingClientRect().top+window.scrollY-60)},
+ uid:function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)},
+ quota:function(name,limit,period){var key='q_'+name,p=period==='day'?P.today():P.today().slice(0,7),q=P.get(key,{p:p,n:0});if(q.p!==p)q={p:p,n:0};
+  return{used:q.n,limit:limit,left:Math.max(0,limit-q.n),ok:function(){return P.pro()||q.n<limit},use:function(){q.n++;P.set(key,q)}}},
+ hash:function(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0},
+ download:function(name,text,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type||'text/plain'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)},
+ copy:function(text){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){P.toast('Copied')},function(){P.toast('Copy failed')})}else{var t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');P.toast('Copied')}catch(e){P.toast('Copy failed')}t.remove()}}
+};
+var qs=new URLSearchParams(location.search);
+if(qs.get('reset')==='1'){Object.keys(localStorage).filter(function(k){return k.indexOf(APP+':')===0}).forEach(function(k){localStorage.removeItem(k)})}
+if(qs.get('tier')==='pro'||qs.get('tier')==='free')P.set('tier',qs.get('tier'));
+document.addEventListener('DOMContentLoaded',function(){
+ P.$$('.pro-feat').forEach(function(el){var o=document.createElement('div');o.className='lockov';
+  o.innerHTML=LOCK+'<b>'+P.esc(el.dataset.feat||'Pro feature')+'</b><span class="small muted">Included in Pro</span><button class="btn pro sm" type="button">Preview Pro</button>';
+  o.querySelector('button').onclick=function(){P.setTier('pro');P.toast('Pro preview on (demo, no payment)')};el.appendChild(o)});
+ P.$$('.tier button').forEach(function(b){b.onclick=function(){P.setTier(b.dataset.tier)}});
+ if(window.init)window.init();
+ P.setTier(P.get('tier','free'));
+});
+})();
+
+var LIMIT=5;
+var PL=[
+ {n:'Monstera',s:'Monstera deliciosa',w:7,l:'Bright, indirect',h:'60%+ humidity',t:'18–29 °C',c:'#3f8f3a',iss:['Yellow lower leaves','Usually overwatering. Let the top 5 cm of soil dry, check drainage holes, remove the yellow leaf at the stem.'],pest:'Spider mites: wipe leaves weekly, rinse in the shower if you see webbing.'},
+ {n:'Snake plant',s:'Dracaena trifasciata',w:18,l:'Low to bright',h:'Any',t:'15–29 °C',c:'#5b7f3a',iss:['Soft, mushy base','Root rot from wet soil. Unpot, cut away brown roots, repot in dry cactus mix, water every 3 weeks.'],pest:'Mealybugs: dab with rubbing alcohol on a cotton swab.'},
+ {n:'Pothos',s:'Epipremnum aureum',w:8,l:'Medium, indirect',h:'40%+',t:'16–30 °C',c:'#7cb342',iss:['Brown crispy tips','Dry air or uneven watering. Water when the top third is dry, mist or group plants.'],pest:'Scale: scrape off and wipe with neem solution.'},
+ {n:'Fiddle-leaf fig',s:'Ficus lyrata',w:9,l:'Bright, some direct',h:'50%+',t:'16–27 °C',c:'#2e7d32',iss:['Brown spots in the middle of leaves','Often root rot or bacterial spot. Reduce watering, improve airflow, do not move the plant often.'],pest:'Thrips: sticky traps plus insecticidal soap.'},
+ {n:'Peace lily',s:'Spathiphyllum wallisii',w:6,l:'Low to medium',h:'50%+',t:'18–27 °C',c:'#1b5e20',iss:['Drooping leaves','Thirsty. Water thoroughly; it should perk up within hours. Use filtered water if tips brown.'],pest:'Fungus gnats: let soil dry, use yellow sticky traps.'},
+ {n:'ZZ plant',s:'Zamioculcas zamiifolia',w:16,l:'Low to bright, indirect',h:'Any',t:'15–26 °C',c:'#33691e',iss:['Yellowing stems','Too much water. Let it dry fully before watering again.'],pest:'Rarely bothered by pests.'},
+ {n:'Aloe vera',s:'Aloe barbadensis miller',w:16,l:'Bright, direct',h:'Low',t:'13–27 °C',c:'#8bc34a',iss:['Thin, curling leaves','Underwatered or too little light. Water deeply, move to a sunny window.'],pest:'Aloe mites: remove affected growth.'},
+ {n:'Spider plant',s:'Chlorophytum comosum',w:7,l:'Bright, indirect',h:'40%+',t:'13–27 °C',c:'#9ccc65',iss:['Brown leaf tips','Fluoride or salt in tap water. Use rain or filtered water and flush the soil.'],pest:'Aphids on new shoots: rinse off.'}];
+var mine=P.get('mine',null),journal=P.get('journal',[]),last=P.get('last',null);
+if(!mine){mine=[{n:'Monstera',name:'Living room monstera',lw:P.addDays(P.today(),-6)},{n:'Snake plant',name:'Bedroom snake plant',lw:P.addDays(P.today(),-4)}];P.set('mine',mine)}
+function byName(n){return PL.filter(function(p){return p.n===n})[0]}
+function interval(p){return P.pro()?Math.max(2,Math.round(p.w/(+P.$('#climate').value*+P.$('#season').value))):p.w}
+function quota(){var q=P.quota('ids',LIMIT);P.$('#quotaTxt').textContent=P.pro()?'Unlimited IDs (Pro preview)':q.left+' of '+LIMIT+' free IDs left this month';P.$('#quotaBar').style.width=(q.used/LIMIT*100)+'%';return q}
+function identify(seed,img){var q=quota();if(!q.ok()){P.toast('Free limit reached: 5 IDs a month');return}q.use();quota();
+ var r=P.$('#result');r.hidden=false;r.innerHTML='<b>Analyzing photo…</b><div class="scan"></div><span class="small muted">demo: matching on device</span>';
+ setTimeout(function(){var h=P.hash(String(seed)),p=PL[h%PL.length],conf=82+h%16,alt=PL[(h>>>4)%PL.length];if(alt===p)alt=PL[(PL.indexOf(p)+1)%PL.length];last={n:p.n,conf:conf,alt:alt.n};P.set('last',last);show();P.toast(p.n+' · '+conf+'% match (demo)')},900)}
+function show(){var r=P.$('#result');if(!last){r.hidden=true;return}r.hidden=false;var p=byName(last.n);
+ r.innerHTML='<div class="row"><div class="grow"><span class="badge demo">demo result</span><h3>'+p.n+'</h3><i>'+p.s+'</i></div><div style="text-align:right"><div class="big" style="color:var(--c)">'+last.conf+'%</div><div class="small muted">match</div></div></div>'+
+ '<div class="small muted">Could also be: '+last.alt+'</div><div class="care"><div><b>Water</b>every '+interval(p)+' days</div><div><b>Light</b>'+p.l+'</div><div><b>Humidity</b>'+p.h+'</div><div><b>Temperature</b>'+p.t+'</div></div>'+
+ '<p class="small" style="margin:10px 0 0"><span class="badge warn">Health check</span> 1 possible issue: <b>'+p.iss[0]+'</b>'+(P.pro()?'':' · details in Pro')+'</p>'+
+ '<button class="btn full" style="margin-top:10px" id="addMine">Add to my plants</button>';
+ P.$('#addMine').onclick=function(){mine.unshift({n:p.n,name:p.n,lw:P.today()});P.set('mine',mine);renderMine();P.toast('Added '+p.n)};
+ P.$('#diag').innerHTML='<p style="margin:0 0 6px"><b>'+p.iss[0]+'</b><br>'+p.iss[1]+'</p><p style="margin:0 0 6px"><b>Pest watch</b><br>'+p.pest+'</p><p class="muted" style="margin:0">Community check: 3 growers agreed with this ID (demo).</p>';sched()}
+function sched(){var p=last?byName(last.n):PL[0];P.$('#sched').innerHTML='<b>'+p.n+'</b>: water every <b>'+interval(p)+' days</b> (base '+p.w+'), feed monthly in spring and summer, rotate a quarter turn weekly. Uses your chosen climate and season only; no location or weather service is contacted.'}
+function renderMine(){var t=P.today();P.$('#mine').innerHTML=mine.length?mine.map(function(m,i){var p=byName(m.n),due=P.days(t,P.addDays(m.lw,interval(p)));
+ return'<li><div class="grow"><b>'+P.esc(m.name)+'</b><div class="small muted">'+p.n+' · every '+interval(p)+' days</div></div><span class="badge '+(due<=0?'bad':due<=2?'warn':'ok')+'">'+(due<0?-due+'d overdue':due===0?'water today':'in '+due+'d')+'</span><button class="btn ghost sm" data-w="'+i+'">Watered</button></li>'}).join(''):'<li class="empty">No plants yet</li>'}
+function renderJ(){P.$('#jList').innerHTML=journal.map(function(j){return'<li><span class="small muted" style="width:52px">'+P.fmtDate(j.d)+'</span><span class="grow">'+P.esc(j.t)+'</span></li>'}).join('')||'<li class="empty">No entries yet</li>'}
+function init(){PL.forEach(function(p){var b=document.createElement('button');b.type='button';b.textContent=p.n;b.onclick=function(){P.$('#prev').innerHTML='<svg viewBox="0 0 120 80" width="120" height="80" aria-hidden="true"><path d="M60 75C60 45 75 20 105 8 108 40 92 62 60 66" fill="'+p.c+'"/><path d="M60 75c0-25-10-45-45-58-3 32 14 50 45 54" fill="'+p.c+'" opacity=".7"/></svg>';
+  var k=0;while(PL[P.hash('s'+p.n+k)%PL.length]!==p)k++;identify('s'+p.n+k)};P.$('#samples').appendChild(b)});
+ P.$('#file').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){P.$('#prev').innerHTML='<img alt="Your photo" src="'+r.result+'">';identify(r.result.slice(0,4000)+f.size)};r.readAsDataURL(f)};
+ P.$('#mine').onclick=function(e){var i=e.target.dataset.w;if(i!=null){mine[+i].lw=P.today();P.set('mine',mine);renderMine();P.toast('Watered')}};
+ P.$('#climate').onchange=P.$('#season').onchange=function(){show();sched();renderMine()};
+ P.$('#jAdd').onclick=function(){var t=P.$('#jText').value.trim();if(!t)return;journal.unshift({d:P.today(),t:t});P.set('journal',journal);P.$('#jText').value='';renderJ()};
+ P.onTier(function(){quota();show();sched();renderMine();renderJ()})}
+window.shotPrep=function(t){return new Promise(function(res){P.$$('#samples button')[0].click();setTimeout(function(){if(t==='pro'){journal=[{d:P.today(),t:'New leaf unfurling, moved closer to the window.'}];renderJ();window.shotScroll=P.top(P.$('#result'))}else window.shotScroll=P.top(P.$('#drop'))-30;res()},1100)})};
+
+</script>
+</body></html>

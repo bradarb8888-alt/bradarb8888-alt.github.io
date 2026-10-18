@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CallNotes: Call notes for real estate agents (prototype) | Free The People Apps</title>
+<meta name="description" content="CallNotes prototype: Call notes for real estate agents. Interactive free and Pro preview by Free The People Apps.">
+<meta name="theme-color" content="#3949ab">
+<link rel="icon" href="img/callnotes-icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="img/callnotes-icon.png">
+<style>:root{--c:#1e6fd9;--c2:#0b4fb0;--bg:#f4f6f9;--card:#fff;--ink:#17202b;--muted:#5d6977;--line:#e3e7ec;--ok:#1a8f4c;--warn:#c26a00;--bad:#c62828;--pro:#7b3fe4}
+@media (prefers-color-scheme:dark){:root{--bg:#0f141a;--card:#18202a;--ink:#e8edf3;--muted:#9aa6b4;--line:#2a3542}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);max-width:560px;margin:auto;min-height:100vh;display:flex;flex-direction:column}
+a{color:var(--c)}button,input,select,textarea{font:inherit;color:inherit}
+.bar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--c);color:#fff}
+.bar .back{color:#fff;text-decoration:none;font-weight:600;font-size:.95rem}
+.tier{display:flex;background:rgba(255,255,255,.18);border-radius:999px;padding:3px}
+.tier button{border:0;background:none;color:#fff;padding:5px 14px;border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer}
+.tier button.on{background:#fff;color:var(--c)}
+body.is-pro .tier button.on{color:var(--pro)}
+.hero{display:flex;gap:12px;align-items:center;padding:14px 16px 6px}
+.hero img{border-radius:12px;flex:none}.hero h1{margin:0;font-size:1.35rem}.hero p{margin:0;color:var(--muted);font-size:.9rem}
+.planline{margin:6px 16px 0;font-size:.82rem;color:var(--muted)}
+.probanner{display:none;margin:8px 16px 0;padding:8px 12px;border-radius:10px;background:var(--pro);color:#fff;font-weight:700;font-size:.85rem;text-align:center}
+body.is-pro .probanner{display:block}body.is-pro .free-only{display:none!important}body:not(.is-pro) .pro-only{display:none!important}
+main{flex:1;padding:8px 16px 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;position:relative}
+.card h2{margin:0 0 8px;font-size:1.05rem;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.muted{color:var(--muted)}.small{font-size:.85rem}.big{font-size:1.9rem;font-weight:800;line-height:1.1}
+.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.grow{flex:1}.wrap{flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+input,select,textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+textarea{min-height:90px;resize:vertical}
+label{display:block;font-size:.8rem;color:var(--muted);margin:6px 0 2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:10px;padding:9px 14px;background:var(--c);color:#fff;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--c);border:1px solid var(--c)}.btn.sm{padding:5px 10px;font-size:.85rem}.btn.full{width:100%}
+.btn.pro{background:var(--pro)}.btn:disabled{opacity:.45;cursor:not-allowed}
+.list{list-style:none;margin:0;padding:0}.list li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.list li:last-child{border-bottom:0}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--line);color:var(--ink);white-space:nowrap}
+.badge.ok{background:#d9f2e3;color:#126b38}.badge.warn{background:#ffe9cc;color:#8a4b00}.badge.bad{background:#fde0e0;color:#a11}.badge.pro{background:var(--pro);color:#fff}.badge.demo{background:#e0ecff;color:#1b4fa0}
+.meter{height:8px;background:var(--line);border-radius:99px;overflow:hidden}.meter i{display:block;height:100%;background:var(--c)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:10px 0 0}.tabs button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-weight:600;font-size:.88rem;cursor:pointer;white-space:nowrap}.tabs button.on{background:var(--c);color:#fff;border-color:var(--c)}
+.pro-feat{min-height:120px}
+.lockov{display:none;position:absolute;inset:0;border-radius:14px;background:color-mix(in srgb,var(--card) 78%,transparent);backdrop-filter:blur(2.5px);-webkit-backdrop-filter:blur(2.5px);flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:12px;z-index:5}
+body:not(.is-pro) .pro-feat>.lockov{display:flex}
+.lockov b{font-size:.95rem}.lockov svg{width:26px;height:26px;fill:var(--pro)}
+.empty{color:var(--muted);text-align:center;padding:14px 0;font-size:.9rem}
+.adslot{border:1px dashed var(--muted);border-radius:10px;padding:12px;text-align:center;color:var(--muted);font-size:.8rem;margin:12px 0}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:#222;color:#fff;padding:10px 16px;border-radius:10px;font-size:.9rem;transition:transform .25s;z-index:50;max-width:90vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+footer{padding:16px;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+footer a{text-decoration:none}
+@media print{.bar,.tabs,footer,.probanner,.noprint,.hero,.planline{display:none!important}body{background:#fff;color:#000}.card{border:0}}
+:root{--c:#3949ab;--c2:#283593}.sum p{margin:0 0 8px}.ai li{padding:6px 0}.ai input{width:auto;margin-right:8px}
+.spk{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:.88rem}.spk .meter{flex:1}
+.fields{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.9rem}.fields b{color:var(--muted);font-weight:600}
+</style></head>
+<body>
+<header class="bar"><a class="back" href="./">&#8249; Prototypes</a><div class="tier" role="group" aria-label="Plan"><button type="button" data-tier="free">Free</button><button type="button" data-tier="pro">Pro</button></div></header>
+<div class="hero"><img src="img/callnotes-icon.svg" width="48" height="48" alt=""><div><h1>CallNotes</h1><p>Call notes for real estate agents</p></div></div>
+<p class="planline free-only">Free: 3 summaries a month, basic summary, copy or download. Pro idea: $15–29/user/mo.</p>
+<div class="probanner">Prototype - Pro preview · demo only, no payment</div>
+<main>
+<div class="card">
+ <h2>New call <span class="badge demo">demo AI</span></h2>
+ <label for="title">Title</label><input id="title" value="Buyer call: Patel family">
+ <label for="tx">Transcript (paste, type, or load the sample)</label>
+ <textarea id="tx" style="min-height:150px"></textarea>
+ <div class="row wrap" style="margin-top:8px"><button class="btn ghost sm" id="sample">Load sample call</button><button class="btn ghost sm" id="clear">Clear</button><span class="grow"></span><span class="small muted" id="quotaTxt"></span></div>
+ <button class="btn full" style="margin-top:10px" id="go">Summarize</button>
+ <p class="small muted" style="margin:6px 0 0">Summaries are made on this device by simple rules (demo). Nothing is sent to a server.</p>
+</div>
+<div id="out" hidden>
+<div class="card sum"><h2>Summary <span class="row"><button class="btn ghost sm" id="copy">Copy</button><button class="btn ghost sm" id="dl">.txt</button></span></h2><div id="sum"></div></div>
+<div class="card pro-feat" data-feat="Real estate template"><h2>Real estate template</h2><div class="fields" id="fields"></div></div>
+<div class="card pro-feat" data-feat="Auto action items"><h2>Action items</h2><ul class="list ai" id="ai"></ul></div>
+<div class="card pro-feat" data-feat="Speaker ID"><h2>Speakers</h2><div id="spk"></div></div>
+<div class="card pro-feat" data-feat="CRM export"><h2>Export to CRM</h2><p class="small muted" style="margin:0 0 8px">CSV with contact, budget, area, timeline and next step. Works with most CRMs' import.</p><button class="btn pro" id="csv">Download CRM CSV</button></div>
+</div>
+<div class="card"><h2>Saved calls</h2><input id="search" class="pro-only" placeholder="Search all calls (Pro)" style="margin-bottom:6px"><ul class="list" id="saved"></ul></div>
+
+</main>
+<footer>Prototype by <b>Free The People Apps</b> · <a href="https://bradarb8888-alt.github.io/">bradarb8888-alt.github.io</a><br>Data stays in this browser (localStorage). No accounts, no trackers, no payments.</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+var APP='callnotes';
+(function(){
+var LOCK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 0 1 6 0v3z"/></svg>';
+var P=window.P={subs:[],
+ k:function(n){return APP+':'+n},
+ get:function(n,d){try{var v=localStorage.getItem(P.k(n));return v==null?d:JSON.parse(v)}catch(e){return d}},
+ set:function(n,v){try{localStorage.setItem(P.k(n),JSON.stringify(v))}catch(e){}},
+ pro:function(){return P.get('tier','free')==='pro'},
+ onTier:function(f){P.subs.push(f)},
+ setTier:function(t){P.set('tier',t);document.body.classList.toggle('is-pro',t==='pro');
+  document.querySelectorAll('.tier button').forEach(function(b){b.classList.toggle('on',b.dataset.tier===t);b.setAttribute('aria-pressed',b.dataset.tier===t)});
+  P.subs.forEach(function(f){f(t)})},
+ esc:function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})},
+ $:function(s,r){return (r||document).querySelector(s)},
+ $$:function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))},
+ toast:function(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(P._t);P._t=setTimeout(function(){t.classList.remove('show')},2200)},
+ money:function(n){return '$'+(Math.round(n*100)/100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')},
+ today:function(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')},
+ addDays:function(iso,n){var d=new Date(iso+'T12:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)},
+ days:function(a,b){return Math.round((new Date(b+'T12:00:00')-new Date(a+'T12:00:00'))/864e5)},
+ fmtDate:function(iso){return new Date(iso+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'})},
+ top:function(el){return Math.max(0,el.getBoundingClientRect().top+window.scrollY-60)},
+ uid:function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)},
+ quota:function(name,limit,period){var key='q_'+name,p=period==='day'?P.today():P.today().slice(0,7),q=P.get(key,{p:p,n:0});if(q.p!==p)q={p:p,n:0};
+  return{used:q.n,limit:limit,left:Math.max(0,limit-q.n),ok:function(){return P.pro()||q.n<limit},use:function(){q.n++;P.set(key,q)}}},
+ hash:function(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0},
+ download:function(name,text,type){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type:type||'text/plain'}));a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500)},
+ copy:function(text){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(function(){P.toast('Copied')},function(){P.toast('Copy failed')})}else{var t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();try{document.execCommand('copy');P.toast('Copied')}catch(e){P.toast('Copy failed')}t.remove()}}
+};
+var qs=new URLSearchParams(location.search);
+if(qs.get('reset')==='1'){Object.keys(localStorage).filter(function(k){return k.indexOf(APP+':')===0}).forEach(function(k){localStorage.removeItem(k)})}
+if(qs.get('tier')==='pro'||qs.get('tier')==='free')P.set('tier',qs.get('tier'));
+document.addEventListener('DOMContentLoaded',function(){
+ P.$$('.pro-feat').forEach(function(el){var o=document.createElement('div');o.className='lockov';
+  o.innerHTML=LOCK+'<b>'+P.esc(el.dataset.feat||'Pro feature')+'</b><span class="small muted">Included in Pro</span><button class="btn pro sm" type="button">Preview Pro</button>';
+  o.querySelector('button').onclick=function(){P.setTier('pro');P.toast('Pro preview on (demo, no payment)')};el.appendChild(o)});
+ P.$$('.tier button').forEach(function(b){b.onclick=function(){P.setTier(b.dataset.tier)}});
+ if(window.init)window.init();
+ P.setTier(P.get('tier','free'));
+});
+})();
+
+var LIMIT=3;
+var SAMPLE="Maya: Hi Raj, thanks for making time. How did the weekend showings go?\nRaj: Good. We really liked the townhouse on Oak Street but the kitchen is small.\nMaya: Understood. What is your budget ceiling right now?\nRaj: We are pre-approved for $850,000, but we would rather stay under $800,000.\nMaya: Okay. Are you still focused on Kitsilano and Fairview?\nRaj: Yes, and maybe Mount Pleasant if it is close to the school.\nMaya: I will send you three new listings in Mount Pleasant by Thursday.\nRaj: Great. Priya needs to see any place in person before we decide.\nMaya: Of course. I will book showings for Saturday morning.\nRaj: We want to move before the end of January because our lease ends then.\nMaya: Then we should write an offer within two weeks. Can you send me your updated pre-approval letter?\nRaj: Sure, I will email it tomorrow.\nMaya: Perfect. I will also check strata documents for the Oak Street unit.";
+var calls=P.get('calls',[]),cur=null;
+function sentences(t){return t.split(/\n+/).map(function(l){var m=l.match(/^\s*([A-Z][\w .'-]{0,20}):\s*(.*)$/);return m?{who:m[1],text:m[2]}:{who:'',text:l.trim()}}).filter(function(s){return s.text})}
+function analyze(t){var ss=sentences(t),kw=/budget|\$|offer|move|lease|pre-?approv|price|deadline|decide|showing|listing|school/i;
+ var scored=ss.map(function(s,i){var sc=(kw.test(s.text)?2:0)+(/\d/.test(s.text)?1:0)+(s.text.length>40?1:0);return{s:s,i:i,sc:sc}}).sort(function(a,b){return b.sc-a.sc}).slice(0,4).sort(function(a,b){return a.i-b.i});
+ var acts=ss.filter(function(s){return/\b(I will|I'll|we will|we should|can you|needs? to|please)\b/i.test(s.text)}).map(function(s){var due=(s.text.match(/\b(today|tomorrow|tonight|by \w+day|\w+day morning|on \w+day|within [\w ]+? weeks?|next week|end of \w+)\b/i)||[])[0]||'';return{who:/^can you/i.test(s.text)?'(other party)':s.who,text:s.text.replace(/^(Okay|Sure|Perfect|Great|Of course)[,.]\s*/i,''),due:due}});
+ var words={};ss.forEach(function(s){var k=s.who||'Unknown';words[k]=(words[k]||0)+s.text.split(/\s+/).length});
+ var money=(t.match(/\$[\d,]+(\.\d+)?/g)||[]),areas=['Kitsilano','Fairview','Mount Pleasant','Oak Street','Downtown','Burnaby','Richmond','Yaletown'].filter(function(a){return t.indexOf(a)>=0});
+ var timeline=(t.match(/(before|by) the end of \w+|within \w+ weeks?/i)||[''])[0];
+ return{summary:scored.map(function(x){return(x.s.who?x.s.who+': ':'')+x.s.text}),acts:acts,words:words,f:{Client:(ss.filter(function(s){return s.who})[1]||{}).who||'',Budget:money.join(' / '),Areas:areas.join(', '),Timeline:timeline,'Next step':(acts[0]||{}).text||''}}}
+function quota(){var q=P.quota('calls',LIMIT);P.$('#quotaTxt').textContent=P.pro()?'Unlimited (Pro)':q.left+' of '+LIMIT+' free this month';return q}
+function asText(c){return c.title+'\n'+P.fmtDate(c.date)+'\n\nSummary\n- '+c.a.summary.join('\n- ')+(P.pro()?'\n\nAction items\n- '+c.a.acts.map(function(a){return a.text+(a.due?' ('+a.due+')':'')}).join('\n- '):'')}
+function show(c){cur=c;P.$('#out').hidden=false;var a=c.a;
+ P.$('#sum').innerHTML='<p class="small muted">'+P.esc(c.title)+' · '+P.fmtDate(c.date)+'</p><ul style="margin:0;padding-left:18px">'+a.summary.map(function(s){return'<li>'+P.esc(s)+'</li>'}).join('')+'</ul>';
+ P.$('#fields').innerHTML=Object.keys(a.f).map(function(k){return'<b>'+k+'</b><span>'+P.esc(a.f[k]||'–')+'</span>'}).join('');
+ P.$('#ai').innerHTML=a.acts.length?a.acts.map(function(x,i){return'<li><input type="checkbox" id="ai'+i+'"'+(c.done&&c.done[i]?' checked':'')+' data-i="'+i+'"><label for="ai'+i+'" style="margin:0;color:inherit;font-size:.92rem" class="grow">'+P.esc(x.text)+(x.who?' <span class="small muted">· '+P.esc(x.who)+'</span>':'')+'</label>'+(x.due?'<span class="badge warn">'+P.esc(x.due)+'</span>':'')+'</li>'}).join(''):'<li class="empty">No action items found</li>';
+ var tot=Object.keys(a.words).reduce(function(s,k){return s+a.words[k]},0);P.$('#spk').innerHTML=Object.keys(a.words).map(function(k){var pc=Math.round(a.words[k]/tot*100);return'<div class="spk"><b style="width:80px">'+P.esc(k)+'</b><div class="meter"><i style="width:'+pc+'%"></i></div><span style="width:40px;text-align:right">'+pc+'%</span></div>'}).join('')}
+function list(){var q=(P.$('#search').value||'').toLowerCase();var l=calls.filter(function(c){return!q||!P.pro()||(c.title+' '+c.tx).toLowerCase().indexOf(q)>=0});
+ P.$('#saved').innerHTML=l.length?l.map(function(c){return'<li><div class="grow"><b>'+P.esc(c.title)+'</b><div class="small muted">'+P.fmtDate(c.date)+' · '+c.a.acts.length+' action items</div></div><button class="btn ghost sm" data-open="'+c.id+'">Open</button></li>'}).join(''):'<li class="empty">'+(calls.length?'No matches':'No saved calls yet')+'</li>'}
+function init(){P.$('#tx').value=SAMPLE;
+ P.$('#sample').onclick=function(){P.$('#tx').value=SAMPLE};P.$('#clear').onclick=function(){P.$('#tx').value=''};
+ P.$('#go').onclick=function(){var t=P.$('#tx').value.trim();if(!t){P.toast('Add a transcript first');return}var q=quota();if(!q.ok()){P.toast('Free limit: 3 calls a month');return}q.use();quota();
+  var c={id:P.uid(),title:P.$('#title').value||'Call',date:P.today(),tx:t,a:analyze(t),done:{}};calls.unshift(c);P.set('calls',calls);list();show(c);P.toast('Summary ready (demo)');P.$('#out').scrollIntoView({behavior:'smooth'})};
+ P.$('#copy').onclick=function(){P.copy(asText(cur))};P.$('#dl').onclick=function(){P.download('call-notes.txt',asText(cur))};
+ P.$('#csv').onclick=function(){var f=cur.a.f,q=function(s){return'"'+String(s).replace(/"/g,'""')+'"'};P.download('crm-export.csv','Title,Date,Client,Budget,Areas,Timeline,Next step\n'+[cur.title,cur.date,f.Client,f.Budget,f.Areas,f.Timeline,f['Next step']].map(q).join(',')+'\n','text/csv')};
+ P.$('#ai').onchange=function(e){cur.done[e.target.dataset.i]=e.target.checked;P.set('calls',calls)};
+ P.$('#saved').onclick=function(e){var id=e.target.dataset.open;if(id)show(calls.filter(function(c){return c.id===id})[0])};
+ P.$('#search').oninput=list;
+ P.onTier(function(){quota();list()})}
+window.shotPrep=function(t){P.$('#go').click();window.shotScroll=P.top(P.$('#out'))+(t==='pro'?200:-10)};
+
+</script>
+</body></html>
