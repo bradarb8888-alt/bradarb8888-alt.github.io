@@ -1,69 +1,47 @@
-<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PillCheck Privacy Policy</title>
-<style>body{font-family:sans-serif;max-width:720px;margin:auto;padding:16px;line-height:1.5}</style></head>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PillCheck - Privacy Policy</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #FBF8F3; color: #1A1C1B; }
+  header { background: linear-gradient(135deg, #13807C, #0B3B3C); color: #fff; padding: 48px 24px 40px; }
+  header p { color: #5ED6B4; margin: 0 0 6px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+  h1 { margin: 0; font-size: 30px; }
+  main { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
+  h2 { font-size: 20px; margin-top: 32px; }
+  .box { background: #fff; border-radius: 18px; padding: 20px 24px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
+  footer { color: #666; font-size: 14px; margin-top: 40px; }
+  @media (prefers-color-scheme: dark) { body { background: #111514; color: #E2E5E3; } .box { background: #1C2221; } footer { color: #aaa; } }
+</style>
+</head>
 <body>
-<h1>PillCheck Privacy Policy</h1>
-<p><strong>Effective date:</strong> October 17, 2026 (version 1.1.0)<br>
-<strong>Publisher:</strong> Free The People Apps<br>
-<strong>Contact:</strong> <a href="mailto:bradarb8888@gmail.com">bradarb8888@gmail.com</a></p>
-
-<h2>Summary</h2>
-<p>PillCheck is free and shows ads provided by Start.io. Your medication list, dose times and history are stored only on your device. They are never sent to us, to Start.io or to anyone else, and we (Free The People Apps) cannot see them. There is no account and no analytics. The app uses the internet only to load ads.</p>
-
-<h2>Information you enter</h2>
-<p>PillCheck stores the following only in a private database on your device:</p>
-<ul>
-<li>Medication names, optional dose notes, and the times you set for reminders.</li>
-<li>A log of which doses you marked as taken, and when.</li>
-<li>Your settings (for example, whether reminders are on).</li>
-</ul>
-<p>This information may be health-related. It is not sent to us or to anyone else, it is never shared with the ad network, and it is not sold or used for advertising. Ads are not targeted based on your medications.</p>
-
+<header><div style="max-width:720px;margin:0 auto"><p>Direct Apps</p><h1>PillCheck<br>Privacy Policy</h1></div></header>
+<main>
+<div class="box"><strong>Short version:</strong> PillCheck doesn&#x27;t collect, upload, share or sell anything. Your medication list and dose history stay on your phone.</div>
+<h2>What the app stores</h2>
+<p>The medications you add (name, strength, form, amount, times, days, colour, supply count, notes), the doses you mark taken or skipped, and your settings. All of it is kept in the app&#x27;s private storage on your device.</p>
+<h2>What the app sends</h2>
+<p>Nothing. PillCheck does not request the Internet permission, so it cannot send data anywhere. It has no advertising, analytics, crash-reporting or tracking code, and no accounts.</p>
 <h2>Permissions</h2>
-<ul>
-<li><strong>Notifications (POST_NOTIFICATIONS):</strong> used only to show your dose reminders. You can deny or turn this off at any time in the app's Settings or in Android settings.</li>
-<li><strong>Run at startup, wake lock, foreground service:</strong> added automatically by Android's WorkManager library so reminders survive restarts and run efficiently.</li>
-<li><strong>Internet, network and Wi-Fi state, advertising ID (AD_ID), install referrer, ad topics:</strong> added by the Start.io advertising SDK and used only to load, show and measure ads.</li>
-<li>PillCheck does <strong>not</strong> request GPS location, contacts, camera, storage, or exact-alarm permissions.</li>
-</ul>
-
-<h2>Advertising (Start.io)</h2>
-<p>PillCheck shows a small banner ad on the Meds and History screens. Ads never appear on the Today screen, on dose reminders, or as full-screen ads. Ads are served by <strong>Start.io</strong> (Start.io Inc., formerly StartApp). To show and measure ads, the Start.io SDK collects:</p>
-<ul>
-<li>your device's advertising ID (you can reset it or delete it in Android Settings &gt; Privacy &gt; Ads),</li>
-<li>device information such as model, operating system version, language, screen size and mobile carrier,</li>
-<li>your IP address, and approximate (coarse) location derived from it,</li>
-<li>ad interaction data such as ad views and clicks.</li>
-</ul>
-<p>Start.io handles this data under its own privacy policy: <a href="https://www.start.io/policy/privacy-policy/">https://www.start.io/policy/privacy-policy/</a>. Your medication data is never shared with Start.io.</p>
-
-<h2>Your ad choice (consent)</h2>
-<p>The first time you open PillCheck, it asks whether you allow personalized ads. No ad SDK is started until you answer.</p>
-<ul>
-<li><strong>Yes, personalize:</strong> Start.io may use the data above to show ads based on your interests.</li>
-<li><strong>No thanks:</strong> you still see ads, but they are not personalized. We tell Start.io that you have not consented (GDPR) and that you opt out of the sale or sharing of your personal information (US privacy string, CCPA/CPRA).</li>
-</ul>
-<p>You can change your choice anytime in PillCheck &gt; Settings &gt; Ad privacy choices.</p>
-
-<h2>Other third parties</h2>
-<p>PillCheck contains no analytics or crash-reporting SDKs. Start.io is the only third party that receives data from the app.</p>
-
+<p>Notifications: to remind you when a dose is due. You can turn reminders off in Settings or in Android&#x27;s settings. Run at startup (RECEIVE_BOOT_COMPLETED): so the next reminder is set again after your phone restarts. PillCheck does not access your location, contacts, camera, microphone, photos or files.</p>
+<h2>Exporting your history</h2>
+<p>If you tap Export history, PillCheck builds a CSV of the last 90 days and opens Android&#x27;s share sheet. You choose the app it goes to, such as email. That transfer is handled by the app you choose, under its own privacy policy.</p>
 <h2>Backups</h2>
-<p>If you have turned on Android's device backup, Android may include PillCheck's data in your own Google backup under your account and Google's terms. Free The People Apps has no access to these backups.</p>
-
-<h2>Keeping and deleting your data</h2>
-<p>Your data stays on your device until you delete it. You can remove a medication in the app, clear all data in Android Settings &gt; Apps &gt; PillCheck &gt; Storage &gt; Clear data, or uninstall the app, which deletes everything.</p>
-
-<h2>Children</h2>
-<p>PillCheck is not directed at children under 13 (16 in the EEA). We do not knowingly collect personal information from children.</p>
-
+<p>PillCheck opts out of Android cloud backup and device-to-device transfer, so your health information is not copied to a backup service.</p>
+<h2>Deleting your data</h2>
+<p>Delete any medication inside the app. Uninstalling PillCheck, or clearing its storage in Android settings, removes everything permanently.</p>
 <h2>Medical disclaimer</h2>
-<p>PillCheck is a reminder and log tool. It does not give medical advice. Reminders may be delayed by Android's battery saving. Always follow your doctor's or pharmacist's instructions.</p>
-
+<p>PillCheck is a reminder and logbook. It is not medical advice and does not check doses, interactions or side effects. Follow your prescriber&#x27;s and pharmacist&#x27;s instructions.</p>
+<h2>Children</h2>
+<p>PillCheck is not directed at children under 13 and does not knowingly collect information from anyone.</p>
 <h2>Changes</h2>
-<p>If this policy changes, we will update the effective date above and, for significant changes, note them in the app's release notes.</p>
-
+<p>If this policy changes, the new version will be posted on this page with a new date, and the in-app Privacy screen will be updated in the next release.</p>
 <h2>Contact</h2>
-<p>Questions? Email <a href="mailto:bradarb8888@gmail.com">bradarb8888@gmail.com</a>.</p>
-</body></html>
+<p>Brad, Direct Apps: <a href="mailto:bradarb8888@gmail.com">bradarb8888@gmail.com</a></p>
+<footer>Effective October 22, 2026. Applies to PillCheck for Android (com.directapps.pillcheck), version 2.0.0 and later.</footer>
+</main>
+</body>
+</html>
